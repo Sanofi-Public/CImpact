@@ -12,7 +12,9 @@ Perform causal inference analysis on this data set
 * Follow the steps
 
 
+## List of current listed scenarios
 
+[List of scenarios]("./docs/scenarios.MD")
 
 ## Example of scenarios
 
@@ -41,3 +43,13 @@ A json file to be put into `.scenarios/` folder
 * min_date:
 * max_date:
 * frequency: weekly (US only), monthly (RoW)
+
+## Updating codes
+
+### New scenario file
+
+Tbd
+
+### Update in code structure
+
+Tbd
