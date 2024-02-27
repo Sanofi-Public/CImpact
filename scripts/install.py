@@ -13,8 +13,12 @@ def edit_config_file():
         yaml.dump(config, ostream, default_flow_style=False, sort_keys=False)
 
 
+def generate_docs():
+    pass
+
 def main():
     edit_config_file()
+    generate_docs()
 
 
 if __name__ == '__main__':
