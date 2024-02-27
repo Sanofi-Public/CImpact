@@ -1,0 +1,11 @@
+{
+    "name": "us-multaq2",
+    "country": "US",
+    "brands": [ "MULTAQ", "SOTALOL", "AMIODARONE", "FLECAINIDE", "Propafenone", "Dofetilid" ],
+    "target_brand": "MULTAQ",
+    "metric": "SUM(QUANTITY_SOLD)",
+    "cutover": "2023-09-01",
+    "min_date": "2023-01-01",
+    "frequency": "weekly"
+}
+   
