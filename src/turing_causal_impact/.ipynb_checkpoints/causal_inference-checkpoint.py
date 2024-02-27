@@ -23,14 +23,13 @@ def provide_analyse(scenario, df, model_args=None):
     brands = scenario["brands"].copy()
     brands.remove(scenario["target_brand"])
     new_columns = [scenario["target_brand"]] + brands
-    metric = scenario["metric"]
 
     data = df[df["COUNTRY"] == scenario["country"]]
-    data = data[["SALES_DT", "LOCAL_BRAND_NAME", metric]]
+    data = data[["SALES_DT", "LOCAL_BRAND_NAME", "SUM(QUANTITY_SOLD)"]]
     data["SALES_DT"] = pd.to_datetime(data["SALES_DT"])
-    data[metric] = data[metric].astype(np.int64)
+    data["SUM(QUANTITY_SOLD)"] = data["SUM(QUANTITY_SOLD)"].astype(np.int64)
     data = data.pivot(
-        index="SALES_DT", columns="LOCAL_BRAND_NAME", values=metric
+        index="SALES_DT", columns="LOCAL_BRAND_NAME", values="SUM(QUANTITY_SOLD)"
     )
     data = data.reindex(columns=new_columns)
 
