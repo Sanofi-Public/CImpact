@@ -1,0 +1,11 @@
+{
+    "name": "us-multaq",
+    "country": "US",
+    "brands": [ "MULTAQ", "SOTALOL", "AMIODARONE"],
+    "target_brand": "MULTAQ",
+    "metric": "SUM(QUANTITY_SOLD)",
+    "cutover": "2023-09-01",
+    "min_date": "2023-01-01",
+    "frequency": "weekly"
+}
+   

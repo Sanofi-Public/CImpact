@@ -1,11 +1,21 @@
-run-get-data:
-	python3 -m src.main --process get_data
+config:
+	python ./scripts/install.py
 
-run-preprocess-data:
-	python3 -m src.main --process preprocess_data
+install:
+	if [ ! -d .env ]; then \
+		python -m venv .env;\
+	fi
+	. .env/bin/activate; pip install --upgrade pip
+	. .env/bin/activate; pip install -r requirements.txt
+	. .env/bin/activate; python ./scripts/install.py
 
-run-batch-inference:
-	python3 -m src.main --process run-batch-inference
+format:
+	black *.py
+	black ./src/turing_causal_impact/*.py
+	black .scripts/*.py
 
-run-postprocess-and-save-data:
-	python3 -m src.main --process postprocess-and-save-data
+clean:
+	rm -rf .env
+
+test:
+	echo "Not testing"

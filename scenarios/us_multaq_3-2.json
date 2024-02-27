@@ -1,0 +1,12 @@
+{
+    "name": "us-multaq3-2",
+    "country": "US",
+    "brands": [ "MULTAQ", "SOTALOL"],
+    "target_brand": "MULTAQ",
+    "metric": "SUM(QUANTITY_SOLD)",
+    "cutover": "2023-09-22",
+    "min_date": "2023-01-01",
+    "max_date": "2023-12-31",
+    "frequency": "weekly"
+}
+   
