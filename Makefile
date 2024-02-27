@@ -19,3 +19,6 @@ clean:
 
 test:
 	echo "Not testing"
+
+publish:
+	git push
