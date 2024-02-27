@@ -46,9 +46,11 @@ A json file to be put into `.scenarios/` folder
 
 ## Updating codes
 
-### New scenario file
+### Adding or updating a new scenario file
 
-Tbd
+* Create your scenario in right folder under `scenarios/` 
+* Update `docs/scenarios.MD`file
+* commit to main and push to master
 
 ### Update in code structure
 
