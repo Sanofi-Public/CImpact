@@ -29,6 +29,4 @@ connections:
     database: DF_CI_PROD
     role: DF_CI_PROD_DEVELOPER
     warehouse: DF_CI_PROD_WH_ADHOC
-  
-  
-login: tobechanged@sanofi.com
+login: charles.girard@sanofi.com
