@@ -1,0 +1,24 @@
+name: CHECKMARX
+on:
+  pull_request:
+    paths-ignore:
+    - .checkmarx/scan_results/*
+    branches:
+    - staging
+    - main
+    - release/*
+jobs:
+  call-codeguard-workflow:
+    uses: Sanofi-Shared-GitHub-Apps/cyber-AST-Action_reusable/.github/workflows/code_guard_ast.yml@main
+    with:
+      production-branch: main
+      groups: OneAI
+      cmdb: prj0060632
+      details-output: .checkmarx/scan_results
+      allow-tollgates: true
+      allow-pr-check: true
+    secrets:
+      DOCKER_AUTH_CONFIG: ${{ secrets.DOCKER_AUTH_CONFIG }}
+      DOCKER_AUTH_ID: ${{ secrets.DOCKER_AUTH_ID }}
+      CX_CLIENT_AUTH_ID: ${{ secrets.CX_CLIENT_AUTH_ID }}
+      CX_CLIENT_AUTH_SECRET: ${{ secrets.CX_CLIENT_AUTH_SECRET }}

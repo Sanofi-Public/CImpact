@@ -1,0 +1,7 @@
+{
+    "sonarlint.connectedMode.project": {
+        // should be same connectionId you define in the User settings 
+        "connectionId": "sonar",
+        "projectKey": "oneai-repotemplate-python_basic"
+        }
+}

@@ -1,0 +1,6 @@
+__pycache__/
+.hypothesis/
+.pytest_cache/
+.coverage
+data/
+.idea/*

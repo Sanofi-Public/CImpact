@@ -1,0 +1,110 @@
+apiVersion: argoproj.io/v1alpha1
+kind: CronWorkflow
+metadata:
+  name: basic-cron-workflow
+spec:
+  #  run every 15 minutes
+  schedule: "15 * * * *"
+  # replace existing run
+  concurrencyPolicy: "Replace"
+  workflowSpec:
+    entrypoint: basic-pipeline
+    templates:
+    # high sys container  template definition for high memory/compute steps
+    - name: high-sys-container
+      metadata:
+        labels:
+          app: container
+          name: HSC
+      # retry to max 3 times
+      retryStrategy:
+        limit: 3
+      inputs:
+        parameters:
+          # define step to run
+          - name: step
+      container:
+        # resource request
+        resources:
+          requests:
+            memory: 4Gi
+            cpu: 2
+        imagePullPolicy: Always
+        # docker image url
+        image: 171649450587.dkr.ecr.eu-west-1.amazonaws.com/<pipeline-docker-image>:<version>
+        # command to run
+        command: ["bash", "-c"]
+        args:
+          [
+            "make {{inputs.parameters.step}}",
+          ]
+        envFrom:
+        - secretRef:
+            name: oneai     
+    # low sys container template definition for low memory/compute steps
+    - name: low-sys-container
+      metadata:
+        labels:
+          app: container
+          name: LSC
+      # retry to max 3 times
+      retryStrategy:
+        limit: 3
+      inputs:
+      # define step to run
+        parameters:
+          - name: step
+      container:
+      # resource request
+        resources:
+          requests:
+            memory: 1Gi
+            cpu: 1
+        imagePullPolicy: Always
+      # docker image url
+        image: 171649450587.dkr.ecr.eu-west-1.amazonaws.com/<pipeline-docker-image>:<version>
+      # command to run
+        command: ["bash", "-c"]
+        args:
+          [
+            "make {{inputs.parameters.step}}"
+          ]
+        envFrom:
+        - secretRef:
+            name: oneai 
+    
+    # basic pipeline dag
+    - name: basic-pipeline
+      dag:
+        tasks:
+          # get-data step - retrieves data from storage
+          - name: get-data
+            template: low-sys-container
+            arguments:
+              parameters:
+                - name: step
+                  value: run-get-data
+          # preprocess step - # serializes the data for inference
+          - name: pre-process-data
+            template: high-sys-container
+            arguments:
+              parameters:
+                - name: step
+                  value: run-preprocess-data
+            depends: get-data
+          # batch-inference step - # does the batch prediction
+          - name: batch-inference
+            template: high-sys-container
+            arguments:
+              parameters:
+                - name: step
+                  value: run-batch-inference
+            depends: pre-process-data
+          # postprocess step - # formats & saves data
+          - name: postprocess-and-save-data
+            template: high-sys-container
+            arguments:
+              parameters:
+                - name: step
+                  value: run-postprocess-and-save-data
+            depends: batch-inference
