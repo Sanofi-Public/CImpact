@@ -14,7 +14,7 @@ Perform causal inference analysis on this data set
 
 ## List of current listed scenarios
 
-[List of scenarios]("/docs/scenarios.MD")
+[List of scenarios](./docs/scenarios.MD)
 
 ## Example of scenarios
 
