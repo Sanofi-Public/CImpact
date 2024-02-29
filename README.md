@@ -36,22 +36,22 @@ A json file to be put into `.scenarios/` folder
 
 * name :  free format string to identify your scenario
 * country : Name of the country where we need to run the analysis (e.g US, FRANCE, ...)
-* brands: All the brands to be used for the analysis
+* brands: All the brands to be used for the analysis (these brands will set the aseline for projected analysis after the cutover time)
 * target_brand: the brand we want to run the analysis
-* metric: the column of the data we need to use 
-* cutover:
-* min_date:
-* max_date:
-* frequency: weekly (US only), monthly (RoW)
+* metric: The column of the data we need to use (e.g. sales quantity)
+* cutover: The time at which intervention happened
+* min_date: The minimum date for the analysis (this falls before the cutover date)
+* max_date: The maximum date for the analysis (this falls after the cutover date)
+* frequency: weekly (US only), monthly (rest of the world) - this depends on the granularity of the target data (such as sales)
 
 ## Updating codes
 
 ### Adding or updating a new scenario file
 
-* Create your scenario in right folder under `scenarios/` 
+* Create your scenario in the right folder under `scenarios/` 
 * Update `docs/scenarios.MD`file
 * commit to main and push to master
 
 ### Update in code structure
 
-Tbd
+TBD
