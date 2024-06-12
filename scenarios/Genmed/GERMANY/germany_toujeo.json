@@ -1,7 +1,7 @@
 {
     "name": "germany-toujeo",
     "country": "GERMANY",
-    "brands": [  "Tresiba", "Semglee", "SULIQUA", "TOUJEO"],
+    "brands": [ "LANTUS", "Levemir", "Tresiba", "Semglee", "SULIQUA", "TOUJEO",  "NPH"],
     "target_brand": "TOUJEO",
     "metric": "SUM(QUANTITY_SOLD)",
     "cutover": "2023-09-01",

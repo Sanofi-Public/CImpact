@@ -1,0 +1,10 @@
+{
+    "name": "brazil-zinpass",
+    "country": "BRAZIL",
+    "brands": [ "TREZETE", "COLEDUE R", "PLENANCE EZE", "ZINPASS EZE"],
+    "target_brand": "ZINPASS EZE",
+    "metric": "SUM(QUANTITY)",
+    "cutover": "2023-11-01",
+    "frequency": "monthly"
+}
+   

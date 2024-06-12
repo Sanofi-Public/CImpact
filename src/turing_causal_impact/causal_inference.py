@@ -36,6 +36,7 @@ def provide_analyse(scenario, df, model_args=None):
         index="SALES_DT", columns="LOCAL_BRAND_NAME", values=metric
     )
     data = data.reindex(columns=new_columns)
+    data.fillna(0, inplace=True)
 
     # set boundaries of analysis
     cutover_date = dt.date.fromisoformat(scenario["cutover"])

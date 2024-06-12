@@ -1,9 +1,9 @@
 {
     "name": "brazil-puran",
     "country": "BRAZIL",
-    "brands": [ "LEVOID", "SYNTHROID", "LEVOTIROXINA", "PURAN T-4", "EUTHYROX"],
-    "target_brand": "PURAN T-4",
-    "metric": "SUM(QUANTITY_SOLD)",
+    "brands": [ "LEVOID", "SYNTHROID", "LEVOTIROXINA", "PURAN", "EUTHYROX"],
+    "target_brand": "PURAN",
+    "metric": "SUM(QUANTITY)",
     "cutover": "2023-11-01",
     "frequency": "monthly"
 }

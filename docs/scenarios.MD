@@ -1,10 +1,5 @@
 # General Medecine
 
-## Brazil
-
-### brazil_puran.json
-
-Performance of UC14 on Puran
 
 ## US
 
