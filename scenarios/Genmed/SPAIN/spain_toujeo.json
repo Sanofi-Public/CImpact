@@ -1,0 +1,14 @@
+{
+    "name": "spain_toujeo",
+    "country": "SPAIN",
+    "brands": [ "LEVEMIR", "LANTUS", "TOUJEO", "SEMGLEE", "TRESIBA", "ABASAGLAR"],
+    "target_brand": "TOUJEO",
+    "metric": "SUM(UNITS_SOLD)",
+    "cutover": "2024-01-01",
+    "frequency": "monthly"
+}
+
+
+
+
+

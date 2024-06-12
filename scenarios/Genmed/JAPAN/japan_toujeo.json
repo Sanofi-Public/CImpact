@@ -1,0 +1,11 @@
+{
+    "name": "Japan-Toujeo",
+    "country": "JAPAN",
+    "brands": [  "LANTUS XR SOLOSTA", ],
+    "target_brand": "LANTUS XR SOLOSTA",
+    "metric": "SUM(QUANTITY_SOLD)",
+    "cutover": "2024-01-01",
+    "frequency": "monthly",
+    "min_date": "2022-01-01"
+}
+   

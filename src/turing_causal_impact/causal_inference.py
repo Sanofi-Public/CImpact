@@ -28,7 +28,10 @@ def provide_analyse(scenario, df, model_args=None):
     data = df[df["COUNTRY"] == scenario["country"]]
     data = data[["SALES_DT", "LOCAL_BRAND_NAME", metric]]
     data["SALES_DT"] = pd.to_datetime(data["SALES_DT"])
+    data[metric] = data[metric].fillna(0) # addedd for quality purpose
     data[metric] = data[metric].astype(np.int64)
+
+    data = data.groupby(["SALES_DT", "LOCAL_BRAND_NAME"]).sum().reset_index()
     data = data.pivot(
         index="SALES_DT", columns="LOCAL_BRAND_NAME", values=metric
     )

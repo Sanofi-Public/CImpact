@@ -1,0 +1,11 @@
+{
+    "name": "germany-toujeo",
+    "country": "GERMANY",
+    "brands": [  "Tresiba", "Semglee", "SULIQUA", "TOUJEO"],
+    "target_brand": "TOUJEO",
+    "metric": "SUM(QUANTITY_SOLD)",
+    "cutover": "2023-09-01",
+    "frequency": "monthly",
+    "min_date": "2022-06-01"
+}
+   

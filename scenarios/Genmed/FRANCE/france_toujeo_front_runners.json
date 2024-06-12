@@ -1,0 +1,10 @@
+{
+    "name": "france-toujeo-front-runners",
+    "country": "FRANCE",
+    "brands": [ "XULTOPHY", "LANTUS", "TRESIBA", "INSULINES MIXTES REGULIERES", "TOUJEO"],
+    "target_brand": "TOUJEO",
+    "metric": "SUM(QUANTITY_SOLD)",
+    "cutover": "2023-10-01",
+    "frequency": "monthly"
+}
+   
