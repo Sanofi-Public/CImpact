@@ -1,7 +1,8 @@
+import numpy as np
 import tensorflow as tf
 import tensorflow_probability as tfp
 from causalimpact.models.base_model import BaseModel
-import numpy as np
+
 
 class TensorFlowModel(BaseModel):
     """

@@ -1,3 +1,4 @@
+import numpy as np
 import pyro
 import pyro.distributions as dist
 import torch
@@ -5,7 +6,7 @@ import torch.nn as nn
 import pyro.optim as optim
 from pyro.infer import SVI, Trace_ELBO, Predictive
 from causalimpact.models.base_model import BaseModel
-import numpy as np
+
 
 class BayesianRegressionModel(nn.Module):
     """
