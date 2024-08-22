@@ -3,8 +3,8 @@
  ![img](https://img.shields.io/badge/SCA%20-%201%20HIGH%20vuln.%20found-red.svg) ![img](https://img.shields.io/badge/SAST%20-%20NO%20vuln.%20found-green.svg)
 
 __Source:__ zip   --   __Branch:__ dev  
-__Scan Execution date:__ 2024-08-22T06:55:35.451551Z  
-__Scan Id:__ cf1b7728-84ee-498b-b375-a6175a84caae  
+__Scan Execution date:__ 2024-08-22T07:13:09.333339Z  
+__Scan Id:__ 77465981-23c1-49f0-a991-03e073f1a521  
 __Scan Status:__ Completed
 ## Executive summary
 You'll find below a list of vulnerabilities identified by our service on both Static Application Security Testing and Software Composition Analysis dimensions:
@@ -37,7 +37,7 @@ Please ensure you understand and agree with packages license terms before deploy
 
 #####
 
-💡 If you need some help on this report, please [submit an issue](https://github.com/Sanofi-Shared-GitHub-Apps/CodeGuardSupport/issues/new?template=support_form.yml&title=Code+Guard+support+form&scan-id=cf1b7728-84ee-498b-b375-a6175a84caae&scan-branch=dev&URL=Sanofi-OneAI/oneai-com-turing-causal_inference) in our CodeGuardSupport repo.
+💡 If you need some help on this report, please [submit an issue](https://github.com/Sanofi-Shared-GitHub-Apps/CodeGuardSupport/issues/new?template=support_form.yml&title=Code+Guard+support+form&scan-id=77465981-23c1-49f0-a991-03e073f1a521&scan-branch=dev&URL=Sanofi-OneAI/oneai-com-turing-causal_inference) in our CodeGuardSupport repo.
 
 #####
 
