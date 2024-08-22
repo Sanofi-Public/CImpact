@@ -10,3 +10,4 @@ torch>=1.7.0
 seaborn
 pyyaml
 black
+pylint
