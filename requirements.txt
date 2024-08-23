@@ -11,3 +11,5 @@ seaborn
 pyyaml
 black
 pylint
+pytest-cov
+pytest
