@@ -1,14 +1,23 @@
-import pandas as pd
+""" 
+Main method to handle the flow of causal impact analysis.
+"""
+
 import numpy as np
 from causalimpact.models.tensorflow_model import TensorFlowModel
 from causalimpact.models.prophet_model import ProphetModel
 from causalimpact.models.pyro_model import PyroModel
-from causalimpact.utils import validate_data, regularize_time_series, convert_dates_to_indices, compute_p_value
+from causalimpact.utils import (
+    validate_data,
+    regularize_time_series,
+    convert_dates_to_indices,
+    compute_p_value,
+)
+
 
 class CausalImpactAnalysis:
     """
     CausalImpactAnalysis class for running causal impact analysis using different models.
-    
+
     Usage:
     ------
     # Define inputs: Model config, data, pre_period, post_period, covariates
@@ -21,7 +30,7 @@ class CausalImpactAnalysis:
             'num_samples': 1000
         }
     }
-    
+
     file_path = 'comparison_data.csv'
     index_col = 'DATE'  # Date column
     target_col = 'CHANGED'  # Target column
@@ -30,11 +39,16 @@ class CausalImpactAnalysis:
     pre_period = ['2019-04-16', '2019-07-14']
     post_period = ['2019-07-15', '2019-08-01']
 
-    analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col)
+    analysis = CausalImpactAnalysis(data,
+                pre_period,
+                post_period,
+                model_config,
+                index_col,
+                target_col)
     result = analysis.run_analysis()
     print(result)
-    
-    
+
+
     Available model arguments and their default values:
 
     TensorFlow Model:
@@ -42,7 +56,9 @@ class CausalImpactAnalysis:
     - learning_rate: 0.01 (Learning rate for the optimizer)
     - num_variational_steps: 200 (Number of variational steps for Variational Inference)
     - num_results: 100 (Number of results for HMC sampling)
-    - fit_method: 'vi' (Fit method: 'vi' for Variational Inference, 'hmc' for Hamiltonian Monte Carlo)
+    - fit_method: 'vi' 
+        - Fit method: 'vi' for Variational Inference,
+        - 'hmc' for Hamiltonian Monte Carlo
 
     Prophet Model:
     - seasonality_mode: 'multiplicative' (Seasonality mode, either 'additive' or 'multiplicative')
@@ -59,6 +75,7 @@ class CausalImpactAnalysis:
     - num_samples: 1000 (Number of samples for posterior predictive sampling)
     """
 
+    #pylint: disable=too-many-instance-attributes, too-many-arguments
     def __init__(self, data, pre_period, post_period, config, index_col, target_col):
         self.data = data
         self.pre_period = pre_period
@@ -66,20 +83,48 @@ class CausalImpactAnalysis:
         self.config = config
         self.index_col = index_col
         self.target_col = target_col
-        self.covariates = self.data[[col for col in data.columns if col not in [index_col, target_col]]]
+        self.covariates = self.data[
+            [col for col in data.columns if col not in [index_col, target_col]]
+        ]
+        self.model = None
 
     def initialize_model(self):
         """
         Initialize the appropriate model based on the configuration.
         """
-        if self.config['model_type'] == 'tensorflow':
-            return TensorFlowModel(self.data, self.pre_period, self.post_period, self.index_col, self.target_col, self.covariates, self.config['model_args'])
-        elif self.config['model_type'] == 'prophet':
-            return ProphetModel(self.data, self.pre_period, self.post_period, self.index_col, self.target_col, self.covariates, self.config['model_args'])
-        elif self.config['model_type'] == 'pyro':
-            return PyroModel(self.data, self.pre_period, self.post_period, self.index_col, self.target_col, self.covariates, self.config['model_args'])
-        else:
-            raise ValueError(f"Model type '{self.config['model_type']}' is not supported.")
+        if self.config["model_type"] == "tensorflow":
+            return TensorFlowModel(
+                self.data,
+                self.pre_period,
+                self.post_period,
+                self.index_col,
+                self.target_col,
+                self.covariates,
+                self.config["model_args"],
+            )
+        if self.config["model_type"] == "prophet":
+            return ProphetModel(
+                self.data,
+                self.pre_period,
+                self.post_period,
+                self.index_col,
+                self.target_col,
+                self.covariates,
+                self.config["model_args"],
+            )
+        if self.config["model_type"] == "pyro":
+            return PyroModel(
+                self.data,
+                self.pre_period,
+                self.post_period,
+                self.index_col,
+                self.target_col,
+                self.covariates,
+                self.config["model_args"],
+            )
+        raise ValueError(
+            f"Model type '{self.config['model_type']}' is not supported."
+        )
 
     def run_analysis(self):
         """
@@ -95,37 +140,44 @@ class CausalImpactAnalysis:
         summary = self.generate_summary(post_pred, forecast_dist)
         plot = self.model.plot(combined_predictions)
         return summary, plot
-    
+
     def preprocess(self):
         """
         Preprocess the data.
         """
         self.data = self.data.ffill().bfill()
-        self.data = regularize_time_series(self.data, date_col=self.index_col, freq='D')
+        self.data = regularize_time_series(self.data, date_col=self.index_col, freq="D")
         if validate_data(self.data, self.pre_period, self.post_period):
             self.pre_period = convert_dates_to_indices(self.data, self.pre_period)
             self.post_period = convert_dates_to_indices(self.data, self.post_period)
 
+    #pylint: disable=unused-argument
     def generate_summary(self, post_pred, forecast_dist):
         """
         Generate a summary of the causal impact analysis.
         """
-        if 'inferences' not in dir(self.model) or self.model.inferences is None:
-            raise ValueError("Inferences have not been computed. Run 'postprocess_results' first.")
+        if "inferences" not in dir(self.model) or self.model.inferences is None:
+            raise ValueError(
+                "Inferences have not been computed. Run 'postprocess_results' first."
+            )
 
-        if self.config['model_type'] == 'tensorflow':
-            posterior_samples = forecast_dist.sample(self.config.get('num_results', 100)).numpy()
+        if self.config["model_type"] == "tensorflow":
+            posterior_samples = forecast_dist.sample(
+                self.config.get("num_results", 100)
+            ).numpy()
             posterior_samples = np.array(posterior_samples)
             posterior_samples = np.squeeze(posterior_samples, axis=-1)
-        elif self.config['model_type'] == 'pyro':
-            posterior_samples = forecast_dist['obs']
+        elif self.config["model_type"] == "pyro":
+            posterior_samples = forecast_dist["obs"]
         else:
-            posterior_samples = forecast_dist['yhat']
-        
-        tail_area_prob, causal_effect_prob = compute_p_value(posterior_samples, np.sum(self.model.post_data[self.target_col].values))
-        predicted_mean = self.model.inferences['predicted_mean']
-        ci_lower = self.model.inferences['ci_lower']
-        ci_upper = self.model.inferences['ci_upper']
+            posterior_samples = forecast_dist["yhat"]
+
+        tail_area_prob, causal_effect_prob = compute_p_value(
+            posterior_samples, np.sum(self.model.post_data[self.target_col].values)
+        )
+        predicted_mean = self.model.inferences["predicted_mean"]
+        ci_lower = self.model.inferences["ci_lower"]
+        ci_upper = self.model.inferences["ci_upper"]
         actual_post = self.model.post_data[self.target_col].values
 
         abs_effect = actual_post - predicted_mean
@@ -150,5 +202,5 @@ class CausalImpactAnalysis:
     Posterior probability of a causal effect: {causal_effect_prob:.2%}
 
     For more details, type: summary(impact, "report")"""
-        
+
         return summary

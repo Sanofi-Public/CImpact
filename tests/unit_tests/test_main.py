@@ -8,14 +8,14 @@ import os
 import sys
 
 
-cur_path=os.path.abspath(os.path.dirname(__file__))
-sys.path.insert(0, cur_path+"/../../src")
+cur_path = os.path.abspath(os.path.dirname(__file__))
+sys.path.insert(0, cur_path + "/../../src")
 
 
 def test_dummy(caplog):
-    """Test for the main function.
-    """
+    """Test for the main function."""
     from main import dummy
-    res = dummy('Testing')
-    assert 'Testing' in caplog.text
-    assert res == 'Testing'
+
+    res = dummy("Testing")
+    assert "Testing" in caplog.text
+    assert res == "Testing"
