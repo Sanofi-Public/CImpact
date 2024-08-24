@@ -16,7 +16,7 @@ class TestUtils(unittest.TestCase):
             }
         }
 
-        file_path = '/Users/i0539825/Documents/Causal Inference/fresh-start/main branch/oneai-com-turing-causal_inference/tests/unit_tests/comparison_data.csv' #'comparison_data.csv'
+        file_path = './tests/unit_tests/comparison_data.csv' #'comparison_data.csv'
         index_col = 'DATE'  # Date column
         target_col = 'CHANGED'  # Target column
 
@@ -47,7 +47,7 @@ class TestUtils(unittest.TestCase):
             }
         }
 
-        file_path = '/Users/i0539825/Documents/Causal Inference/fresh-start/main branch/oneai-com-turing-causal_inference/tests/unit_tests/comparison_data.csv' #'comparison_data.csv'
+        file_path = './tests/unit_tests/comparison_data.csv' #'comparison_data.csv'
         index_col = 'DATE'  # Date column
         target_col = 'CHANGED'  # Target column
 
@@ -78,7 +78,7 @@ class TestUtils(unittest.TestCase):
             }
         }
 
-        file_path = '/Users/i0539825/Documents/Causal Inference/fresh-start/main branch/oneai-com-turing-causal_inference/tests/unit_tests/comparison_data.csv' #'comparison_data.csv'
+        file_path = './tests/unit_tests/comparison_data.csv' #'comparison_data.csv'
         index_col = 'DATE'  # Date column
         target_col = 'CHANGED'  # Target column
 
