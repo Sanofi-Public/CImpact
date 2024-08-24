@@ -1,4 +1,0 @@
-select COUNTRY, to_date(iff(length(YEARMONTH)=6, concat(YEARMONTH,  '01'), to_char(YEARMONTH)), 'YYYYMMDD') as SALES_DT, PRODUCT as LOCAL_BRAND_NAME,  sum(QUANTITY), sum(SALES_AMOUNT)
-from DMT_TURING.DMT_COMPETITOR
-where COUNTRY = '%COUNTRY%' and PRODUCT = '%BRAND%'
-group by all

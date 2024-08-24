@@ -11,7 +11,7 @@ install:
 
 format:
 	black *.py
-	black ./src/turing_causal_impact/*.py
+	black ./src/*.py
 	black .scripts/*.py
 
 clean:
