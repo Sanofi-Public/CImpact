@@ -3,8 +3,8 @@
  ![img](https://img.shields.io/badge/SCA%20-%201%20HIGH%20vuln.%20found-red.svg) ![img](https://img.shields.io/badge/SAST%20-%20NO%20vuln.%20found-green.svg)
 
 __Source:__ zip   --   __Branch:__ dev  
-__Scan Execution date:__ 2024-08-24T00:17:26.267103Z  
-__Scan Id:__ 9ba6c647-375c-4c8d-b5b3-5577671317d5  
+__Scan Execution date:__ 2024-09-19T22:51:19.365683Z  
+__Scan Id:__ 5688fbc4-2384-4227-af0c-421e0fcc9ec2  
 __Scan Status:__ Completed
 ## Executive summary
 You'll find below a list of vulnerabilities identified by our service on both Static Application Security Testing and Software Composition Analysis dimensions:
@@ -31,13 +31,13 @@ You'll find below a list of vulnerabilities identified by our service on both St
 
 
 ### Legal Risks:
-1 high issues found.
+2 high issues found.
 Please ensure you understand and agree with packages license terms before deploying to production.
 
 
 #####
 
-💡 If you need some help on this report, please [submit an issue](https://github.com/Sanofi-Shared-GitHub-Apps/CodeGuardSupport/issues/new?template=support_form.yml&title=Code+Guard+support+form&scan-id=9ba6c647-375c-4c8d-b5b3-5577671317d5&scan-branch=dev&URL=Sanofi-OneAI/oneai-com-turing-causal_inference) in our CodeGuardSupport repo.
+💡 If you need some help on this report, please [submit an issue](https://github.com/Sanofi-Shared-GitHub-Apps/CodeGuardSupport/issues/new?template=support_form.yml&title=Code+Guard+support+form&scan-id=5688fbc4-2384-4227-af0c-421e0fcc9ec2&scan-branch=dev&URL=Sanofi-OneAI/oneai-com-turing-causal_inference) in our CodeGuardSupport repo.
 
 #####
 
@@ -53,7 +53,7 @@ Python-pyro-ppl-1.9.1
 
 location: [requirements.txt](/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/dev/requirements.txt)
 
- <details><summary>vulnerabilities inherited from  <b> Python-torch-2.4.0 </b> 
+ <details><summary>vulnerabilities inherited from  <b> Python-torch-2.4.1 </b> 
 
  </summary><blockquote>
 
@@ -67,7 +67,7 @@ A vulnerability in PyTorch's "torch.distributed.rpc" framework allows for Remote
 
 
  <details><summary><b>
-Python-torch-2.4.0
+Python-torch-2.4.1
  </b></summary><blockquote>
 
 location: [requirements.txt](/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/dev/requirements.txt)
@@ -113,7 +113,8 @@ _Please read carefully the license terms associated with these packages, and che
 
   __Risks:__
 
-  - Issue Name: AGPL 3.0 - Copyright risk score: 7 - Patent risk score: 1 - Copyleft: Full </blockquote></details>
+  - Issue Name: AGPL 3.0 - Copyright risk score: 7 - Patent risk score: 1 - Copyleft: Full
+  - Issue Name: GPL 2.0 - Copyright risk score: 6 - Patent risk score: 3 - Copyleft: Full </blockquote></details>
 
 
 ### HIGH SAST Alerts
