@@ -3,8 +3,8 @@
  ![img](https://img.shields.io/badge/SCA%20-%201%20HIGH%20vuln.%20found-red.svg) ![img](https://img.shields.io/badge/SAST%20-%20NO%20vuln.%20found-green.svg)
 
 __Source:__ zip   --   __Branch:__ dev  
-__Scan Execution date:__ 2024-08-24T00:17:26.267103Z  
-__Scan Id:__ 9ba6c647-375c-4c8d-b5b3-5577671317d5  
+__Scan Execution date:__ 2024-09-20T13:09:46.966122Z  
+__Scan Id:__ 852b2d2c-7039-467a-8cb2-d46306a1475f  
 __Scan Status:__ Completed
 ## Executive summary
 You'll find below a list of vulnerabilities identified by our service on both Static Application Security Testing and Software Composition Analysis dimensions:
@@ -37,7 +37,7 @@ Please ensure you understand and agree with packages license terms before deploy
 
 #####
 
-💡 If you need some help on this report, please [submit an issue](https://github.com/Sanofi-Shared-GitHub-Apps/CodeGuardSupport/issues/new?template=support_form.yml&title=Code+Guard+support+form&scan-id=9ba6c647-375c-4c8d-b5b3-5577671317d5&scan-branch=dev&URL=Sanofi-OneAI/oneai-com-turing-causal_inference) in our CodeGuardSupport repo.
+💡 If you need some help on this report, please [submit an issue](https://github.com/Sanofi-Shared-GitHub-Apps/CodeGuardSupport/issues/new?template=support_form.yml&title=Code+Guard+support+form&scan-id=852b2d2c-7039-467a-8cb2-d46306a1475f&scan-branch=dev&URL=Sanofi-OneAI/oneai-com-turing-causal_inference) in our CodeGuardSupport repo.
 
 #####
 
@@ -53,7 +53,7 @@ Python-pyro-ppl-1.9.1
 
 location: [requirements.txt](/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/dev/requirements.txt)
 
- <details><summary>vulnerabilities inherited from  <b> Python-torch-2.4.0 </b> 
+ <details><summary>vulnerabilities inherited from  <b> Python-torch-2.4.1 </b> 
 
  </summary><blockquote>
 
@@ -67,7 +67,7 @@ A vulnerability in PyTorch's "torch.distributed.rpc" framework allows for Remote
 
 
  <details><summary><b>
-Python-torch-2.4.0
+Python-torch-2.4.1
  </b></summary><blockquote>
 
 location: [requirements.txt](/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/dev/requirements.txt)
