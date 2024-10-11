@@ -3,10 +3,10 @@ Main method to handle the flow of causal impact analysis.
 """
 
 import numpy as np
-from src.causalimpact.models.tensorflow_model import TensorFlowModel
-from src.causalimpact.models.prophet_model import ProphetModel
-from src.causalimpact.models.pyro_model import PyroModel
-from src.causalimpact.utils import (
+from causalimpact.models.tensorflow_model import TensorFlowModel
+from causalimpact.models.prophet_model import ProphetModel
+from causalimpact.models.pyro_model import PyroModel
+from causalimpact.utils import (
     validate_data,
     regularize_time_series,
     convert_dates_to_indices,

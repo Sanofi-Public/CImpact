@@ -5,7 +5,7 @@ Module for TensorFlow-based Bayesian Structural Time Series model implementation
 import numpy as np
 import tensorflow as tf
 import tensorflow_probability as tfp
-from src.causalimpact.models.base_model import BaseModel
+from causalimpact.models.base_model import BaseModel
 
 
 class TensorFlowModel(BaseModel):

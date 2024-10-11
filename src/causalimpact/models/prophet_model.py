@@ -4,7 +4,7 @@ Prophet model for causal impact measurement
 
 from prophet import Prophet
 import numpy as np
-from src.causalimpact.models.base_model import BaseModel
+from causalimpact.models.base_model import BaseModel
 
 
 class ProphetModel(BaseModel):
