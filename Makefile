@@ -1,5 +1,5 @@
 config:
-	python ./scripts/install.py
+	echo "Nothing to configure"
 
 install:
 	if [ ! -d .env ]; then \
@@ -19,7 +19,10 @@ clean:
 
 test:
 	echo "Testing"
-	. .env/bin/activate pytest
+	. .env/bin/activate python -m unittest -v
+
+build:
+	. .env/bin/activate python -m build
 
 publish:
 	git push

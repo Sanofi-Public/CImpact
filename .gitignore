@@ -6,3 +6,4 @@ data/
 .idea/*
 data/*
 .env/
+dist/
