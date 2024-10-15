@@ -56,8 +56,11 @@ model_config = {
 pre_period = ['2020-01-01', '2020-06-01']
 post_period = ['2020-06-02', '2020-12-31']
 
+# Define the frequency of data
+freq = "D"
+
 # Run the analysis
-analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, 'DATE', 'TARGET')
+analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, 'DATE', 'TARGET', freq)
 result = analysis.run_analysis()
 print(result)
 ```
