@@ -7,7 +7,7 @@ install:
 	fi
 	. .env/bin/activate; pip install --upgrade pip
 	. .env/bin/activate; pip install -r requirements.txt
-	. .env/bin/activate; python ./scripts/install.py
+	
 
 format:
 	black *.py
@@ -18,7 +18,8 @@ clean:
 	rm -rf .env
 
 test:
-	echo "Not testing"
+	echo "Testing"
+	. .env/bin/activate pytest
 
 publish:
 	git push
