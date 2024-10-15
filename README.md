@@ -1,4 +1,4 @@
-# CausalImpact
+# Cimpact
 
 CausalImpact is a modular causal impact analysis library with support for multiple time series models, including TensorFlow, Prophet, and Pyro. This library provides a flexible framework for estimating the causal effect of an intervention on time series data.
 
