@@ -9,7 +9,7 @@ import torch
 from torch import nn
 from pyro import optim
 from pyro.infer import SVI, Trace_ELBO, Predictive
-from causalimpact.models.base_model import BaseModel
+from cimpact.models.base_model import BaseModel
 
 
 #pylint: disable=abstract-method

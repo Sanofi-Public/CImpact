@@ -12,17 +12,18 @@ install:
 format:
 	black *.py
 	black ./src/*.py
-	black .scripts/*.py
+	
 
 clean:
 	rm -rf .env
 
 test:
-	echo "Testing"
-	. .env/bin/activate python -m unittest -v
+	echo "Testing";
+	. .env/bin/activate; python -m pip install --upgrade --force-reinstall dist/cimpact*.whl
+	. .env/bin/activate; python -m unittest -v
 
 build:
-	. .env/bin/activate python -m build
+	. .env/bin/activate; python -m build	
 
 publish:
 	git push

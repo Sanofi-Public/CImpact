@@ -1,6 +1,6 @@
 import unittest
 import pandas as pd
-from src.causalimpact.main import CausalImpactAnalysis
+from cimpact.main import CausalImpactAnalysis
 
 
 class TestUtils(unittest.TestCase):

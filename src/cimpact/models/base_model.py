@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-from causalimpact.utils import convert_dates_to_indices
+from cimpact.utils import convert_dates_to_indices
 
 
 class BaseModel(ABC):
