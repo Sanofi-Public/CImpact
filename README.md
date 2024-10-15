@@ -101,7 +101,7 @@ We have compared the performance of TensorFlow, Prophet, and Pyro models on vari
 
 ## License
 
-This work can be used free of charge, for academic research purposes only and for non-commercial uses only - see the LICENSE file for details.
+This work is shared under Apache Licence v 2
 
 ## Acknowledgements
 
