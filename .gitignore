@@ -6,4 +6,5 @@ data/
 .idea/*
 data/*
 .env/
-dist/
+dist/*
+.vscode/

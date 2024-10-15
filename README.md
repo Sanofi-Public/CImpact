@@ -36,7 +36,7 @@ Here is an example of how to use the CausalImpact library:
 
 ```python
 import pandas as pd
-from causalimpact import CausalImpactAnalysis
+from cimpact import CausalImpactAnalysis
 
 # Define your data
 data = pd.read_csv('your_data.csv', parse_dates=['DATE'], index_col='DATE')
