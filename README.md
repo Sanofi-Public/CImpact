@@ -21,8 +21,8 @@ Table of Contents
 -   [Why CImpact?](#why-cimpact)
 -   [Installation](#installation)
 -   [Getting Started](#getting-started)
-    -   [Example Usage](#example-usage)
     -   [Model Configurations](#model-configurations)
+    -   [Example Usage](#example-usage)
 -   [Evaluation Methods](#evaluation-methods)
 -   [Performance Comparison](#performance-comparison)
 -   [Future Plans](#future-plans)
@@ -63,46 +63,6 @@ Copy code
 
 ## Getting Started
 ---------------
-
-### Example Usage
-
-```python
-
-import pandas as pd
-from cimpact import CausalImpactAnalysis
-
-# Load your data
-data = pd.read_csv('your_data.csv', parse_dates=['DATE'], index_col='DATE')
-
-# Define the configuration for the model
-model_config = {
-    'model_type': 'pyro',  # Options: 'tensorflow', 'prophet', 'pyro'
-    'model_args': {
-        'standardize': True,
-        'learning_rate': 0.01,
-        'num_iterations': 1000,
-        'num_samples': 1000
-    }
-}
-
-# Define the pre and post-intervention periods
-pre_period = ['2020-01-01', '2020-06-01']
-post_period = ['2020-06-02', '2020-12-31']
-
-# Run the analysis
-analysis = CausalImpactAnalysis(
-    data=data,
-    pre_period=pre_period,
-    post_period=post_period,
-    model_config=model_config,
-    date_col='DATE',
-    target_col='TARGET'
-)
-
-result = analysis.run_analysis()
-print(result.summary())
-result.plot()
-```
 
 ## Model Configurations
 
@@ -180,6 +140,197 @@ model_config = {
     }
 }
 ```
+
+### Example Usage
+
+#### Tensowflow model
+
+```python
+
+import pandas as pd
+from cimpact import CausalImpactAnalysis
+
+# Load your data
+data = pd.read_csv('https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/google_data.csv')
+
+# Define the configuration for the model
+model_config = {
+    'model_type': 'pyro',  # Options: 'tensorflow', 'prophet', 'pyro'
+    'model_args': {
+        'standardize': True,
+        'learning_rate': 0.01,
+        'num_variational_steps': 1000,
+        'fit_method': 'vi'
+    }
+}
+
+# Define the pre and post-intervention periods
+pre_period = ['2020-01-01', '2020-03-13']
+post_period = ['2020-03-14', '2020-03-31']
+
+#Define index column and target column
+index_col = 'date'
+target_col = 'y'
+
+# Run the analysis
+analysis = CausalImpactAnalysis(
+            data,
+            pre_period,
+            post_period,
+            model_config,
+            index_col,
+            target_col,
+        )
+
+result, plot = analysis.run_analysis()
+print(result.summary())
+result.plot()
+```
+
+##### Outcome
+
+![Result visualization for Tensorflow model](https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/results/tensorflow_google_data_results.png "Result visualization for Tensorflow model")
+
+Posterior inference {CIMpact}
+
+|                                       | Average          | Cumulative       |
+|---------------------------------------|------------------|------------------|
+| **Actual**                            | 145             | 2,614           |
+| **Prediction (s.d.)**                 | 180 (10)        | 3,237 (10)      |
+| **95% CI**                            | [144, 218]      | [2,880, 3,594]  |
+| **Absolute effect (s.d.)**            | -35 (15)        | -623 (15)       |
+| **95% CI**                            | [-61, -11]      | [-980, -266]    |
+| **Relative effect (s.d.)**            | -19.08% (7.58%) | -19.08% (7.58%) |
+| **95% CI**                            | [-32.42%, -6.66%] | [-32.42%, -6.66%] |
+| **Posterior tail-area probability p:** | 0.15842        |                  |
+| **Posterior probability of a causal effect:** | 84.16%      |                  |
+
+
+#### Pyro model
+
+```python
+
+import pandas as pd
+from cimpact import CausalImpactAnalysis
+
+# Load your data
+data = pd.read_csv('https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/google_data.csv')
+
+# Define the configuration for the model
+model_config = {
+    'model_type': 'pyro',
+    'model_args': {
+        'standardize': True,
+        'learning_rate': 0.01,
+        'num_iterations': 1000,
+        'num_samples': 1000
+    }
+}
+
+# Define the pre and post-intervention periods
+pre_period = ['2020-01-01', '2020-03-13']
+post_period = ['2020-03-14', '2020-03-31']
+
+#Define index column and target column
+index_col = 'date'
+target_col = 'y'
+
+# Run the analysis
+analysis = CausalImpactAnalysis(
+            data,
+            pre_period,
+            post_period,
+            model_config,
+            index_col,
+            target_col,
+        )
+
+result, plot = analysis.run_analysis()
+print(result.summary())
+result.plot()
+```
+
+##### Outcome
+
+![Result visualization for Tensorflow model](https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/results/pyro_google_data_results.png "Result visualization for Tensorflow model")
+
+Posterior inference {CIMpact}
+
+|                                       | Average               | Cumulative         |
+|---------------------------------------|-----------------------|--------------------|
+| **Actual**                            | 145                  | 2,614             |
+| **Prediction (s.d.)**                 | 130 (718)            | 2,348 (718)       |
+| **95% CI**                            | [-2,485, 2,853]      | [-2,485, 2,853]   |
+| **Absolute effect (s.d.)**            | 15 (717)             | 266 (717)         |
+| **95% CI**                            | [-1,315, 1,211]      | [-1,315, 1,211]   |
+| **Relative effect (s.d.)**            | -73.12% (80.40%)     | -1316.23% (80.40%) |
+| **95% CI**                            | [-161.97%, 192.83%]  | [-161.97%, 192.83%] |
+| **Posterior tail-area probability p:** | 0.33167             |                    |
+| **Posterior probability of a causal effect:** | 66.83%           |                    |
+
+***Note:** As you can see here, not all models will result into good results! You need to finetune model config to get the best possible result with the model. 
+
+#### Prophet model
+
+```python
+
+import pandas as pd
+from cimpact import CausalImpactAnalysis
+
+# Load your data
+data = pd.read_csv('https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/google_data.csv')
+
+# Define the configuration for the model
+model_config = {
+    'model_type': 'prophet',
+    'model_args': {
+        'standardize': True,
+        'learning_rate': 0.01,
+        'num_variational_steps': 1000,
+        'weekly_seasonality': False,
+    }
+}
+
+# Define the pre and post-intervention periods
+pre_period = ['2020-01-01', '2020-03-13']
+post_period = ['2020-03-14', '2020-03-31']
+
+#Define index column and target column
+index_col = 'date'
+target_col = 'y'
+
+# Run the analysis
+analysis = CausalImpactAnalysis(
+            data,
+            pre_period,
+            post_period,
+            model_config,
+            index_col,
+            target_col,
+        )
+
+result, plot = analysis.run_analysis()
+print(result.summary())
+result.plot()
+```
+##### Outcome
+
+![Result visualization for Tensorflow model](https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/results/prophet_google_data_results.png "Result visualization for Tensorflow model")
+
+Posterior inference {CIMpact}
+
+|                                       | Average             | Cumulative       |
+|---------------------------------------|---------------------|------------------|
+| **Actual**                            | 145                | 2,614           |
+| **Prediction (s.d.)**                 | 170 (7)            | 3,064 (7)       |
+| **95% CI**                            | [142, 195]         | [142, 195]      |
+| **Absolute effect (s.d.)**            | -25 (14)           | -450 (14)       |
+| **95% CI**                            | [-49, 2]           | [-49, 2]        |
+| **Relative effect (s.d.)**            | -14.55% (8.08%)    | -261.88% (8.08%) |
+| **95% CI**                            | [-28.03%, 1.38%]   | [-28.03%, 1.38%] |
+| **Posterior tail-area probability p:** | 0.00000           |                  |
+| **Posterior probability of a causal effect:** | 100.00%      |                  |
+
 
 ## Evaluation Methods
 ------------------
