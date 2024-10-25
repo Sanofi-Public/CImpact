@@ -1,44 +1,77 @@
-# CImpact - Causal Inference for measuring performance and causal trends
+[![License](https://img.shields.io/badge/License-Academic%20Non--Commercial-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.6%2B-blue.svg)](https://www.python.org/)
+[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://www.tensorflow.org/)
+[![Prophet](https://img.shields.io/badge/Prophet-1.x-blueviolet.svg)](https://facebook.github.io/prophet/)
+[![Pyro](https://img.shields.io/badge/Pyro-1.x-brightgreen.svg)](https://pyro.ai/)
 
-CImpact is a modular causal impact analysis library with support for multiple time series models, including TensorFlow, Prophet, and Pyro. This library provides a flexible framework for estimating the causal effect of an intervention on time series data.
+CImpact - Causal Inference for Measuring Performance and Causal Trends
+======================================================================
+
+
+
+[](LICENSE)
+
+CImpact is a modular causal impact analysis library for Python, supporting multiple time series models, including TensorFlow, Prophet, and Pyro. It provides a flexible framework for estimating the causal effect of an intervention on time series data.
+
+Table of Contents
+-----------------
+
+-   [Introduction](#introduction)
+-   [Features](#features)
+-   [Why CImpact?](#why-cimpact)
+-   [Installation](#installation)
+-   [Getting Started](#getting-started)
+    -   [Example Usage](#example-usage)
+    -   [Model Configurations](#model-configurations)
+-   [Evaluation Methods](#evaluation-methods)
+-   [Performance Comparison](#performance-comparison)
+-   [Future Plans](#future-plans)
+-   [Contributing](#contributing)
+-   [License](#license)
+-   [Acknowledgements](#acknowledgements)
 
 ## Introduction
+------------
 
-CausalImpact is designed to help analysts and data scientists assess the impact of an intervention on time series data. By leveraging different models, this library aims to provide robust causal inference results, accommodating various use cases and preferences in model selection.
+CImpact is designed to help analysts and data scientists assess the impact of an intervention on time series data. By leveraging different statistical models, CImpact aims to provide robust causal inference results, accommodating various use cases and preferences in model selection.
 
-## Why This Library?
+## Features
+--------
 
-This library extends the functionalities of the [tfcausalimpact](https://github.com/WillianFuks/tfcausalimpact) library by incorporating support for multiple modeling approaches, including TensorFlow, Prophet, and Pyro. This modular design allows users to choose the best model for their specific needs and compare the performance and results across different models.
+-   **Support for Multiple Models**: Utilize TensorFlow, Prophet, or Pyro models according to your needs.
+-   **Modular Design**: Easily extend the library with new models due to its adapter-based architecture.
+-   **Flexible Configuration**: Customize model settings and hyperparameters to suit specific analysis requirements.
+-   **Comprehensive Evaluation**: Integrated methods for assessing model performance and the causal impact of interventions.
+-   **Enhanced Visualization**: Generate insightful plots for better interpretation of results.
 
-## Credits
+## Why CImpact?
+------------
 
-This library is inspired by and builds upon the [tfcausalimpact](https://github.com/WillianFuks/tfcausalimpact) library. We would like to acknowledge the contributions of the original authors and thank them for their work, which has been a foundation for this extended version.
+CImpact extends the functionalities of the [tfcausalimpact](https://github.com/WillianFuks/tfcausalimpact) library by incorporating support for multiple modeling approaches. This modular design allows users to choose the best model for their specific needs and compare performance and results across different models.
 
-## Improvements Over tfcausalimpact
+## Installation
+------------
 
-- **Support for Multiple Models**: In addition to TensorFlow, we have added support for Prophet and Pyro models.
-- **Modular Design**: Each model is implemented as a separate adapter, making it easy to extend the library with new models in the future.
-- **Enhanced Flexibility**: Users can now choose from a variety of model configurations and hyperparameters to better suit their specific analysis needs.
+Install CImpact using `pip`:
 
-## Advantages of Modular Components
+bash
 
-- **Extensibility**: Adding new models or updating existing ones is straightforward.
-- **Flexibility**: Users can compare different models' performance and results, choosing the best approach for their data.
-- **Maintainability**: The modular design ensures that changes in one component do not affect others, making the library easier to maintain.
+Copy code
 
-## Evaluation Methods
+`pip install cimpact`
 
-The library includes comprehensive evaluation methods to assess model performance and the causal impact of interventions. These methods are integrated into the framework, ensuring consistent and reliable results.
 
-## How to Run the Code
+## Getting Started
+---------------
 
-Here is an example of how to use the CausalImpact library:
+### Example Usage
 
 ```python
-import pandas as pd
-from causalimpact import CausalImpactAnalysis
 
-# Define your data
+import pandas as pd
+from cimpact import CausalImpactAnalysis
+
+# Load your data
 data = pd.read_csv('your_data.csv', parse_dates=['DATE'], index_col='DATE')
 
 # Define the configuration for the model
@@ -52,54 +85,141 @@ model_config = {
     }
 }
 
-# Define the pre and post periods
+# Define the pre and post-intervention periods
 pre_period = ['2020-01-01', '2020-06-01']
 post_period = ['2020-06-02', '2020-12-31']
 
 # Run the analysis
-analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, 'DATE', 'TARGET')
+analysis = CausalImpactAnalysis(
+    data=data,
+    pre_period=pre_period,
+    post_period=post_period,
+    model_config=model_config,
+    date_col='DATE',
+    target_col='TARGET'
+)
+
 result = analysis.run_analysis()
-print(result)
+print(result.summary())
+result.plot()
 ```
 
 ## Model Configurations
 
-### TensorFlow Model (Bayesian model) 
-- standardize: Whether to standardize the data.
-- learning_rate: Learning rate for the optimizer.
-- num_variational_steps: Number of steps for variational inference.
-- fit_method: Method for fitting the model (‘vi’ for variational inference, ‘hmc’ for Hamiltonian Monte Carlo).
+CImpact allows you to configure the underlying models to suit your analysis needs. Below are the configuration options for each supported model.
 
-### Prophet Model
+#### TensorFlow Model (Bayesian Structural Time Series)
 
-- standardize: Whether to standardize the data.
-- Additional parameters can be passed directly to the Prophet model.
+Configure the TensorFlow model using the following parameters:
 
-### Pyro Model
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `standardize` | `bool` | `True` | Whether to standardize the data before modeling. |
+| `learning_rate` | `float` | `0.01` | Learning rate for the optimizer. |
+| `num_variational_steps` | `int` | `1000` | Number of steps for variational inference. |
+| `fit_method` | `str` | `'vi'` | Method for fitting the model. Options are `'vi'` (Variational Inference) and `'hmc'` (Hamiltonian Monte Carlo). |
 
-- standardize: Whether to standardize the data.
-- learning_rate: Learning rate for the optimizer.
-- num_iterations: Number of iterations for training.
-- num_samples: Number of samples for prediction.
+**Example Configuration:**
+
+```python
+model_config = {
+    'model_type': 'tensorflow',
+    'model_args': {
+        'standardize': True,
+        'learning_rate': 0.01,
+        'num_variational_steps': 1000,
+        'fit_method': 'vi'
+    }
+}
+```
+
+#### Prophet Model
+
+Configure the Prophet model with the following parameters:
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `standardize` | `bool` | `True` | Whether to standardize the data before modeling. |
+| Additional Parameters | - | - | Pass any additional parameters supported by Prophet (e.g., `seasonality_mode`, `holidays`). |
+
+**Example Configuration:**
+
+```python
+model_config = {
+    'model_type': 'prophet',
+    'model_args': {
+        'standardize': True,
+        'seasonality_mode': 'multiplicative',
+        'weekly_seasonality': True,
+        'holidays': your_holidays_dataframe
+    }
+}
+```
+
+#### Pyro Model
+
+Configure the Pyro model using the following parameters:
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `standardize` | `bool` | `True` | Whether to standardize the data before modeling. |
+| `learning_rate` | `float` | `0.01` | Learning rate for the optimizer. |
+| `num_iterations` | `int` | `1000` | Number of iterations for training. |
+| `num_samples` | `int` | `1000` | Number of samples to draw for prediction. |
+
+**Example Configuration:**
+
+```python
+model_config = {
+    'model_type': 'pyro',
+    'model_args': {
+        'standardize': True,
+        'learning_rate': 0.01,
+        'num_iterations': 1000,
+        'num_samples': 1000
+    }
+}
+```
+
+## Evaluation Methods
+------------------
+
+CImpact includes comprehensive evaluation methods to assess model performance and the causal impact of interventions:
+
+-   **Summary Statistics**: Provides point estimates and confidence intervals for the estimated impact.
+-   **Visualization**: Plots observed data, counterfactual predictions, and estimated impact over time.
+-   **Diagnostics**: Offers residual analysis and model diagnostics to assess fit.
 
 ## Performance Comparison
+----------------------
 
-We have compared the performance of TensorFlow, Prophet, and Pyro models on various causal inference tasks. Here are some key observations:
+Our performance comparisons highlight:
 
-- TensorFlow: Offers robust performance and flexibility with advanced features like variational inference and HMC.
-- Prophet: Simple to use with built-in handling of seasonality and holidays, but may be slower for large datasets.
-- Pyro: Provides powerful Bayesian inference capabilities, but requires more computational resources.
+-   **TensorFlow**: Robust performance with flexibility for advanced inference methods like variational inference and HMC.
+-   **Prophet**: User-friendly with built-in seasonality and holiday effects; may be slower with large datasets.
+-   **Pyro**: Strong Bayesian inference capabilities; may require more computational resources.
 
 ## Future Plans
+------------
 
-- Expand Model Support: Add more models to the library to provide even more options for users.
-- Enhanced Visualization: Improve the visualization capabilities for better insights and interpretation of results.
-- User Contributions: Encourage community contributions to extend and improve the library.
+-   **Expand Model Support**: Incorporate additional models to broaden analytical options.
+-   **Enhanced Visualization**: Develop advanced plotting functions for deeper insights.
+-   **Documentation**: Provide detailed documentation and tutorials.
+-   **Community Engagement**: Encourage contributions to extend and refine the library.
+
+## Contributing
+------------
+
+Contributions are welcome! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on how to participate.
 
 ## License
+-------
 
-This work can be used free of charge, for academic research purposes only and for non-commercial uses only - see the LICENSE file for details.
+This work is available for academic research and non-commercial use only. See the <LICENSE> file for details.
 
 ## Acknowledgements
+----------------
 
-We would like to thank the authors of tfcausalimpact for their foundational work, which inspired and enabled the creation of this extended library.
+We extend our gratitude to the authors of [tfcausalimpact](https://github.com/WillianFuks/tfcausalimpact) for their foundational work, which inspired this library.
+
+* * * * *
