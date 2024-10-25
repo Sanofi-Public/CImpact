@@ -64,7 +64,7 @@ print(result)
 
 ## Model Configurations
 
-### TensorFlow Model
+### TensorFlow Model (Bayesian model) 
 - standardize: Whether to standardize the data.
 - learning_rate: Learning rate for the optimizer.
 - num_variational_steps: Number of steps for variational inference.
