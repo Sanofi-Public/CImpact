@@ -52,7 +52,7 @@ CImpact extends the functionalities of the [tfcausalimpact](https://github.com/W
 ## Installation
 ------------
 
-Install CImpact using `pip`:
+Install CImpact using `pip` (pre-asumption is that pip is already installed in user's space):
 
 ```bash
 pip install cimpact
