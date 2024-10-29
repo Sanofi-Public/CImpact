@@ -1,5 +1,5 @@
 config:
-	python ./scripts/install.py
+	echo "Nothing to configure"
 
 install:
 	if [ ! -d .env ]; then \
@@ -7,18 +7,23 @@ install:
 	fi
 	. .env/bin/activate; pip install --upgrade pip
 	. .env/bin/activate; pip install -r requirements.txt
-	. .env/bin/activate; python ./scripts/install.py
+	
 
 format:
 	black *.py
 	black ./src/*.py
-	black .scripts/*.py
+	
 
 clean:
 	rm -rf .env
 
 test:
-	echo "Not testing"
+	echo "Testing";
+	. .env/bin/activate; python -m pip install --upgrade --force-reinstall dist/cimpact*.whl
+	. .env/bin/activate; python -m unittest -v
+
+build:
+	. .env/bin/activate; python -m build	
 
 publish:
 	git push

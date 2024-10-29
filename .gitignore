@@ -6,3 +6,7 @@ data/
 .idea/*
 data/*
 .env/
+dist/*
+.vscode/
+*.ipynb
+*.csv

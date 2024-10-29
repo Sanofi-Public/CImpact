@@ -68,7 +68,7 @@ def regularize_time_series(data, date_col="DATE", freq="D"):
     if date_col in data.columns:
         data[date_col] = pd.to_datetime(data[date_col])
         data = data.set_index(date_col)
-    data = data.asfreq(freq)
+    data = data.asfreq(freq,  method='pad')
     return data
 
 
