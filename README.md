@@ -153,7 +153,7 @@ data = pd.read_csv('https://github.com/Sanofi-OneAI/oneai-com-turing-causal_infe
 
 # Define the configuration for the model
 model_config = {
-    'model_type': 'pyro',  # Options: 'tensorflow', 'prophet', 'pyro'
+    'model_type': 'tensorflow',  # Options: 'tensorflow', 'prophet', 'pyro'
     'model_args': {
         'standardize': True,
         'learning_rate': 0.01,
@@ -174,7 +174,7 @@ target_col = 'y'
 freq = "D"
 
 # Run the analysis
-analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, 'DATE', 'TARGET', freq)
+analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col, freq)
 result = analysis.run_analysis()
 print(result)
 ```
@@ -231,7 +231,7 @@ target_col = 'y'
 freq = "D"
 
 # Run the analysis
-analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, 'DATE', 'TARGET', freq)
+analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col, freq)
 result = analysis.run_analysis()
 print(result)
 ```
@@ -289,7 +289,7 @@ target_col = 'y'
 freq = "D"
 
 # Run the analysis
-analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, 'DATE', 'TARGET', freq)
+analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col, freq)
 result = analysis.run_analysis()
 print(result)
 
