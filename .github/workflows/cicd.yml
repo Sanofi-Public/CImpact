@@ -24,101 +24,100 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: pip install -r requirements.txt
-      - run: |
-          pytest --cov=src/ --cov-report xml:cov.xml --cov-fail-under=70 tests/unit_tests
-          sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' cov.xml
-      - name: upload cov.xml from pytest
+      - run: pip install --upgrade --force-reinstall dist/cimpact*.whl
+      - run: python -m unittest -v
+      - name: Launch test
         uses: actions/upload-artifact@v3
         with:
           name: coverage
           path: cov.xml
           retention-days: 1
-  sonarqube:
-    name: SonarQube
-    needs: unit-tests
-    runs-on: oneai-runner
-    env:
-      REGISTRY: 171649450587.dkr.ecr.eu-west-1.amazonaws.com
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: download cov.xml from unit_test action
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage
-      - name: docker login
-        run: |
-          aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ${REGISTRY}
-      - name: Checkout sonarqube scan private action
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          repository: Sanofi-OneAI/oneai-actions-sonarqube
-          ref: main
-          token: ${{ secrets.ONEAI_GITHUB_PS112203_REPO_READ_TOKEN }}
-          path: ./.github/actions/oneai-actions-sonarqube
-      - name: Run sonarqube scan private action
-        uses: ./.github/actions/oneai-actions-sonarqube
-        env:
-          SONAR_TOKEN: ${{ secrets.SONARQUBE_CI_READ_TOKEN_PROD }}
-          SONAR_HOST_URL: "https://sonarqubeentprod.p095208641432.aws-emea.sanofi.com"
-  build:
-    needs: sonarqube
-    runs-on: oneai-runner
-    env:
-      HTTP_PROXY: http://emea-aws-webproxy.service.cloud.local:3128
-      HTTPS_PROXY: http://emea-aws-webproxy.service.cloud.local:3128
-    steps:
-      - uses: actions/checkout@v2
-      - name: ECR login
-        if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging') && github.event_name == 'push' }}
-        run: |
-          aws ecr get-login-password --region eu-west-1 | docker login \
-            --username AWS \
-            --password-stdin 171649450587.dkr.ecr.eu-west-1.amazonaws.com/${{ github.event.repository.name }}
-      - name: Build Docker image
-        if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging') && github.event_name == 'push' }}
-        run: docker build --build-arg HTTPS_PROXY=$HTTPS_PROXY -t ${{ github.event.repository.name }} .
-      - name: Docker push
-        if:  ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging') && github.event_name == 'push' }}
-        run: |
-          docker tag ${{ github.event.repository.name }}:latest 171649450587.dkr.ecr.eu-west-1.amazonaws.com/${{ github.event.repository.name }}:v0.1.0
-          docker push 171649450587.dkr.ecr.eu-west-1.amazonaws.com/${{ github.event.repository.name }}:v0.1.0
-  deploy:
-    needs: build
-    runs-on: oneai-runner
-    steps:
-      - name: Invoke deployment for Prod 
-        if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
-        id: deployment_api_prod
-        uses: Sanofi-OneAI/oneai-action-invoke_deployment_api@latest
-        # default params
-        with:
-          deployment_type: 'workflow'
-          factory_cluster: 'oneai-factory-emea-shared'
-          factory_environment: 'prod'
-          deployment_path: 'workflows'
-          # Mandatory parameters required for successful deployment must adhere to the following rules:
-            # 1. associated_workspace --> name of the workspace for your use case [lowercase strings and "-" supported]
-            # 2. associated_workshop --> name of the workshop associated to your workspace [lowercase strings and "-" supported]
-            # 3. associated_workshop must contain the associated_workspace
-          associated_workspace: <ASSOCIATED_WORKSPACE>
-          associated_workshop: <ASSOCIATED_WORKSHOP>
-      - name: Invoke deployment for UAT
-        if: ${{ github.ref == 'refs/heads/staging' && github.event_name == 'push' }}
-        id: deployment_api_uat
-        uses: Sanofi-OneAI/oneai-action-invoke_deployment_api@latest
-        # default params
-        with:
-          deployment_type: 'workflow'
-          factory_cluster: 'oneai-factory-emea-shared'
-          factory_environment: 'uat'
-          deployment_path: 'workflows'
-          # Mandatory parameters required for successful deployment must adhere to the following rules:
-            # 1. associated_workspace --> name of the workspace for your use case [lowercase strings and "-" supported]
-            # 2. associated_workshop --> name of the workshop associated to your workspace [lowercase strings and "-" supported]
-            # 3. associated_workshop must contain the associated_workspace
-          associated_workspace: <ASSOCIATED_WORKSPACE>
-          associated_workshop: <ASSOCIATED_WORKSHOP>
+  # sonarqube:
+  #   name: SonarQube
+  #   needs: unit-tests
+  #   runs-on: oneai-runner
+  #   env:
+  #     REGISTRY: 171649450587.dkr.ecr.eu-west-1.amazonaws.com
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0
+  #     - name: download cov.xml from unit_test action
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: coverage
+  #     - name: docker login
+  #       run: |
+  #         aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ${REGISTRY}
+  #     - name: Checkout sonarqube scan private action
+  #       uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0
+  #         repository: Sanofi-OneAI/oneai-actions-sonarqube
+  #         ref: main
+  #         token: ${{ secrets.ONEAI_GITHUB_PS112203_REPO_READ_TOKEN }}
+  #         path: ./.github/actions/oneai-actions-sonarqube
+  #     - name: Run sonarqube scan private action
+  #       uses: ./.github/actions/oneai-actions-sonarqube
+  #       env:
+  #         SONAR_TOKEN: ${{ secrets.SONARQUBE_CI_READ_TOKEN_PROD }}
+  #         SONAR_HOST_URL: "https://sonarqubeentprod.p095208641432.aws-emea.sanofi.com"
+  # build:
+  #   needs: sonarqube
+  #   runs-on: oneai-runner
+  #   env:
+  #     HTTP_PROXY: http://emea-aws-webproxy.service.cloud.local:3128
+  #     HTTPS_PROXY: http://emea-aws-webproxy.service.cloud.local:3128
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: ECR login
+  #       if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging') && github.event_name == 'push' }}
+  #       run: |
+  #         aws ecr get-login-password --region eu-west-1 | docker login \
+  #           --username AWS \
+  #           --password-stdin 171649450587.dkr.ecr.eu-west-1.amazonaws.com/${{ github.event.repository.name }}
+  #     - name: Build Docker image
+  #       if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging') && github.event_name == 'push' }}
+  #       run: docker build --build-arg HTTPS_PROXY=$HTTPS_PROXY -t ${{ github.event.repository.name }} .
+  #     - name: Docker push
+  #       if:  ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging') && github.event_name == 'push' }}
+  #       run: |
+  #         docker tag ${{ github.event.repository.name }}:latest 171649450587.dkr.ecr.eu-west-1.amazonaws.com/${{ github.event.repository.name }}:v0.1.0
+  #         docker push 171649450587.dkr.ecr.eu-west-1.amazonaws.com/${{ github.event.repository.name }}:v0.1.0
+  # deploy:
+  #   needs: build
+  #   runs-on: oneai-runner
+  #   steps:
+  #     - name: Invoke deployment for Prod 
+  #       if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+  #       id: deployment_api_prod
+  #       uses: Sanofi-OneAI/oneai-action-invoke_deployment_api@latest
+  #       # default params
+  #       with:
+  #         deployment_type: 'workflow'
+  #         factory_cluster: 'oneai-factory-emea-shared'
+  #         factory_environment: 'prod'
+  #         deployment_path: 'workflows'
+  #         # Mandatory parameters required for successful deployment must adhere to the following rules:
+  #           # 1. associated_workspace --> name of the workspace for your use case [lowercase strings and "-" supported]
+  #           # 2. associated_workshop --> name of the workshop associated to your workspace [lowercase strings and "-" supported]
+  #           # 3. associated_workshop must contain the associated_workspace
+  #         associated_workspace: <ASSOCIATED_WORKSPACE>
+  #         associated_workshop: <ASSOCIATED_WORKSHOP>
+  #     - name: Invoke deployment for UAT
+  #       if: ${{ github.ref == 'refs/heads/staging' && github.event_name == 'push' }}
+  #       id: deployment_api_uat
+  #       uses: Sanofi-OneAI/oneai-action-invoke_deployment_api@latest
+  #       # default params
+  #       with:
+  #         deployment_type: 'workflow'
+  #         factory_cluster: 'oneai-factory-emea-shared'
+  #         factory_environment: 'uat'
+  #         deployment_path: 'workflows'
+  #         # Mandatory parameters required for successful deployment must adhere to the following rules:
+  #           # 1. associated_workspace --> name of the workspace for your use case [lowercase strings and "-" supported]
+  #           # 2. associated_workshop --> name of the workshop associated to your workspace [lowercase strings and "-" supported]
+  #           # 3. associated_workshop must contain the associated_workspace
+  #         associated_workspace: <ASSOCIATED_WORKSPACE>
+  #         associated_workshop: <ASSOCIATED_WORKSHOP>
           

@@ -13,3 +13,5 @@ black
 pytest-cov
 pytest
 tf-keras
+build
+hatchling
