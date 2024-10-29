@@ -28,11 +28,11 @@ jobs:
       - run: pip install --upgrade --force-reinstall dist/cimpact*.whl
       - run: python -m unittest -v
       - name: Launch test
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage
-          path: cov.xml
-          retention-days: 1
+  #      uses: actions/upload-artifact@v3
+  #      with:
+  #        name: coverage
+  #        path: cov.xml
+  #        retention-days: 1
   # sonarqube:
   #   name: SonarQube
   #   needs: unit-tests
