@@ -77,6 +77,14 @@ class CausalImpactAnalysis:
     - num_samples: 1000 (Number of samples for posterior predictive sampling)
     """
 
+    # add any new model class in this list
+    models = {
+        "tensorflow": TensorFlowModel,
+        "prophet": ProphetModel,
+        "pyro": PyroModel,
+    }
+
+
     #pylint: disable=too-many-instance-attributes, too-many-arguments
     def __init__(self, data, pre_period, post_period, config, index_col, target_col, freq):
         self.data = data
@@ -95,8 +103,9 @@ class CausalImpactAnalysis:
         """
         Initialize the appropriate model based on the configuration.
         """
-        if self.config["model_type"] == "tensorflow":
-            return TensorFlowModel(
+        model_type = self.config["model_type"]
+        if  model_type in self.models:
+            return self.models[model_type](
                 self.data,
                 self.pre_period,
                 self.post_period,
@@ -104,30 +113,11 @@ class CausalImpactAnalysis:
                 self.target_col,
                 self.covariates,
                 self.config["model_args"],
+            ) # return the right model instantiated with necessary parameters
+        else:
+            raise ValueError(
+                f"Model type '{model_type}' is not supported."
             )
-        if self.config["model_type"] == "prophet":
-            return ProphetModel(
-                self.data,
-                self.pre_period,
-                self.post_period,
-                self.index_col,
-                self.target_col,
-                self.covariates,
-                self.config["model_args"],
-            )
-        if self.config["model_type"] == "pyro":
-            return PyroModel(
-                self.data,
-                self.pre_period,
-                self.post_period,
-                self.index_col,
-                self.target_col,
-                self.covariates,
-                self.config["model_args"],
-            )
-        raise ValueError(
-            f"Model type '{self.config['model_type']}' is not supported."
-        )
 
     def run_analysis(self):
         """
