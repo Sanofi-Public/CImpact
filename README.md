@@ -285,19 +285,14 @@ post_period = ['2020-03-14', '2020-03-31']
 index_col = 'date'
 target_col = 'y'
 
-# Run the analysis
-analysis = CausalImpactAnalysis(
-            data,
-            pre_period,
-            post_period,
-            model_config,
-            index_col,
-            target_col,
-        )
+# Define the frequency of data
+freq = "D"
 
-result, plot = analysis.run_analysis()
-print(result.summary())
-result.plot()
+# Run the analysis
+analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, 'DATE', 'TARGET', freq)
+result = analysis.run_analysis()
+print(result)
+
 ```
 ##### Outcome
 
@@ -356,9 +351,9 @@ This work is available for academic research and non-commercial use only. See th
 
 ## Acknowledgements
 ----------------
-We are thankful of Google research (cited below <sup>1</sup>) team for publishing **"Inferring causal impact using Bayesian structural time-series models"** research paper and sharing orginal [R package](https://github.com/google/CausalImpact) to open souce community. We also extend our gratitude to the authors of [tfcausalimpact](https://github.com/WillianFuks/tfcausalimpact) for their foundational work, which inspired this library.  
+We are thankful of Google research (cited below[^1]) team for publishing **"Inferring causal impact using Bayesian structural time-series models"** research paper and sharing orginal [R package](https://github.com/google/CausalImpact) to open souce community. We also extend our gratitude to the authors of [tfcausalimpact](https://github.com/WillianFuks/tfcausalimpact) for their foundational work, which inspired this library.  
 
 
-`[1] Brodersen, K. H., Gallusser, F., Koehler, J., Remy, N., & Scott, S. L. (2015). Inferring causal impact using Bayesian structural time-series models.`
+[^1]: Brodersen, K. H., Gallusser, F., Koehler, J., Remy, N., & Scott, S. L. (2015). Inferring causal impact using Bayesian structural time-series models.
 
 * * * * *
