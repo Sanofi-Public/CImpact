@@ -27,7 +27,7 @@ jobs:
       - run: python -m build
       - run: pip install --upgrade --force-reinstall dist/cimpact*.whl
       - run: python -m unittest -v
-      - name: Launch test
+  #    - name: Launch test
   #      uses: actions/upload-artifact@v3
   #      with:
   #        name: coverage
