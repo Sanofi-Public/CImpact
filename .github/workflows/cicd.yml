@@ -29,7 +29,6 @@ jobs:
       - run: python -m unittest -v
 
   build:
-    needs: sonarqube
     runs-on: oneai-runner
     steps:
       - uses: actions/checkout@v2
