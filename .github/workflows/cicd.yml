@@ -28,7 +28,7 @@ jobs:
       - run: pip install --upgrade --force-reinstall dist/cimpact*.whl
       - run: python -m unittest -v
 
-    build:
+  build:
     needs: sonarqube
     runs-on: oneai-runner
     steps:
