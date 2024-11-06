@@ -27,6 +27,20 @@ jobs:
       - run: python -m build
       - run: pip install --upgrade --force-reinstall dist/cimpact*.whl
       - run: python -m unittest -v
+
+    build:
+    needs: sonarqube
+    runs-on: oneai-runner
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Wheel
+        if: ${{ github.event_name == 'pull_request' || (github.ref == 'refs/heads/main' && github.event_name == 'push') }}
+        run: python3 -m build
+      - name: Push to JFrog
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          pip install -r requirements.txt --extra-index-url https://jfrog-proxy.services.p171649450587.aws-emea.sanofi.com/artifactory/api/pypi/pypi-one_ai-virtual/simple/ --trusted-host jfrog-proxy.services.p171649450587.aws-emea.sanofi.com
+          twine upload --repository-url ${{ secrets.JFROG_REPO_URL }} -u ${{ secrets.JFROG_USER }} -p ${{ secrets.JFROG_PWD }} dist/*
   #    - name: Launch test
   #      uses: actions/upload-artifact@v3
   #      with:
