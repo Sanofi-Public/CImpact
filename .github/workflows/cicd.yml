@@ -33,6 +33,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build Wheel
+        run: pip install -r requirements.txt
         if: ${{ github.event_name == 'pull_request' || (github.ref == 'refs/heads/main' && github.event_name == 'push') }}
         run: python3 -m build
       - name: Push to JFrog
