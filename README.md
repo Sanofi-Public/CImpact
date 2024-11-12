@@ -170,11 +170,8 @@ post_period = ['2020-03-14', '2020-03-31']
 index_col = 'date'
 target_col = 'y'
 
-# Define the frequency of data
-freq = "D"
-
 # Run the analysis
-analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col, freq)
+analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col)
 result = analysis.run_analysis()
 print(result)
 ```
@@ -227,11 +224,8 @@ post_period = ['2020-03-14', '2020-03-31']
 index_col = 'date'
 target_col = 'y'
 
-# Define the frequency of data
-freq = "D"
-
 # Run the analysis
-analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col, freq)
+analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col)
 result = analysis.run_analysis()
 print(result)
 ```
@@ -285,11 +279,8 @@ post_period = ['2020-03-14', '2020-03-31']
 index_col = 'date'
 target_col = 'y'
 
-# Define the frequency of data
-freq = "D"
-
 # Run the analysis
-analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col, freq)
+analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col)
 result = analysis.run_analysis()
 print(result)
 

@@ -38,15 +38,14 @@ class CausalImpactAnalysis:
     data = pd.read_csv(file_path, index_col=index_col, parse_dates=True)
     pre_period = ['2019-04-16', '2019-07-14']
     post_period = ['2019-07-15', '2019-08-01']
-    freq = "D" # Could be "MS"
 
     analysis = CausalImpactAnalysis(data,
                 pre_period,
                 post_period,
                 model_config,
                 index_col,
-                target_col,
-                freq)
+                target_col
+                )
     result = analysis.run_analysis()
     print(result)
 
@@ -86,7 +85,7 @@ class CausalImpactAnalysis:
 
 
     #pylint: disable=too-many-instance-attributes, too-many-arguments
-    def __init__(self, data, pre_period, post_period, config, index_col, target_col, freq):
+    def __init__(self, data, pre_period, post_period, config, index_col, target_col):
         self.data = data
         self.pre_period = pre_period
         self.post_period = post_period
@@ -97,7 +96,6 @@ class CausalImpactAnalysis:
             [col for col in data.columns if col not in [index_col, target_col]]
         ]
         self.model = None
-        self.freq=freq
 
     def initialize_model(self):
         """
@@ -139,7 +137,7 @@ class CausalImpactAnalysis:
         Preprocess the data.
         """
         self.data = self.data.ffill().bfill()
-        self.data = regularize_time_series(self.data, date_col=self.index_col, freq=self.freq)
+        self.data = regularize_time_series(self.data, date_col=self.index_col)
         if validate_data(self.data, self.pre_period, self.post_period):
             self.pre_period = convert_dates_to_indices(self.data, self.pre_period)
             self.post_period = convert_dates_to_indices(self.data, self.post_period)

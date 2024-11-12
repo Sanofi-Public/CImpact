@@ -53,14 +53,13 @@ def validate_data(data, pre_period, post_period):
     return True
 
 
-def regularize_time_series(data, date_col="DATE", freq="D"):
+def regularize_time_series(data, date_col="DATE"):
     """
     Regularize a time series data to have a consistent frequency.
 
     Parameters:
     - data (pd.DataFrame): Input data frame containing the time series.
     - date_col (str): Column name containing the dates.
-    - freq (str): Frequency to regularize to, default is daily ('D').
 
     Returns:
     - pd.DataFrame: Regularized time series data.
@@ -68,7 +67,7 @@ def regularize_time_series(data, date_col="DATE", freq="D"):
     if date_col in data.columns:
         data[date_col] = pd.to_datetime(data[date_col])
         data = data.set_index(date_col)
-    data = data.asfreq(freq,  method='pad')
+    data = data.asfreq(freq=pd.infer_freq(analysis.data.index),  method='pad')
     return data
 
 
