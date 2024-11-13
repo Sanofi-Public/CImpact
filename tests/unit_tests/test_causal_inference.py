@@ -29,8 +29,8 @@ class TestUtils(unittest.TestCase):
                 post_period,
                 model_config,
                 index_col,
-                target_col,
-                "D")
+                target_col
+                )
         result, plt = analysis.run_analysis()
          # Check that key parts of the summary string are present
         self.assertIn("Posterior inference", result)
@@ -61,8 +61,8 @@ class TestUtils(unittest.TestCase):
                 post_period,
                 model_config,
                 index_col,
-                target_col,
-                "D")
+                target_col
+                )
         result, plt = analysis.run_analysis()
          # Check that key parts of the summary string are present
         self.assertIn("Posterior inference", result)
@@ -93,8 +93,8 @@ class TestUtils(unittest.TestCase):
                 post_period,
                 model_config,
                 index_col,
-                target_col,
-                "D")
+                target_col
+                )
         result, plt = analysis.run_analysis()
          # Check that key parts of the summary string are present
         self.assertIn("Posterior inference", result)
