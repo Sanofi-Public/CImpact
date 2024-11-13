@@ -1,10 +1,10 @@
-<img src="https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/assets/logo.png" width=80% height=50%>
-
 [![License](https://img.shields.io/badge/License-Academic%20Non--Commercial-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.7%2B-blue.svg)](https://www.python.org/)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://www.tensorflow.org/)
 [![Prophet](https://img.shields.io/badge/Prophet-1.x-blueviolet.svg)](https://facebook.github.io/prophet/)
 [![Pyro](https://img.shields.io/badge/Pyro-1.x-brightgreen.svg)](https://pyro.ai/)
+
+<img src="https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/assets/logo.png" width=70% height=40%>
 
 CImpact - Causal Inference for Measuring Performance and Causal Trends
 ======================================================================
@@ -19,6 +19,7 @@ Table of Contents
 -----------------
 
 -   [Introduction](#introduction)
+-   [Code Structure](#code-structure)
 -   [Features](#features)
 -   [Why CImpact?](#why-cimpact)
 -   [Installation](#installation)
@@ -36,6 +37,30 @@ Table of Contents
 ------------
 
 CImpact is designed to help analysts and data scientists assess the impact of an intervention on time series data. By leveraging different statistical models, CImpact aims to provide robust causal inference results, accommodating various use cases and preferences in model selection.
+
+## Code Structure
+------------
+
+```plaintext
+CImpact/
+├── .checkmarx/scan_results       # Contains results from code scanning for security and quality issues
+├── .github/                      # GitHub configuration files for workflows and actions
+├── assets/                       # Stores media assets, such as the project logo, used in the README or documentation
+├── examples/                     # Example scripts showcasing usage of the library and sample data for testing
+├── scripts/                      # Utility scripts for code cleaning, formatting, and other maintenance tasks
+├── src/                          # Core library source code, including main modules and adapters for different models
+├── tests/                        # Test cases for ensuring code functionality and correctness across modules
+├── .coveragerc                   # Configuration file for coverage reporting, specifying which files to include/exclude
+├── .gitignore                    # Specifies files and directories for Git to ignore
+├── .pylintrc                     # Configuration for Python linter (Pylint) to enforce code style and quality standards
+├── CONTRIBUTING.md               # Guidelines for contributing to the project
+├── LICENSE.txt                   # License information for the project, detailing usage rights and limitations
+├── Makefile                      # Commands for building, testing, and packaging the project in a standard way
+├── README.md                     # Project introduction, usage instructions, and documentation (this file)
+├── __init__.py                   # Marks the directory as a Python package
+├── pyproject.toml                # Python packaging configuration file for managing dependencies and metadata
+├── requirements.txt              # List of Python dependencies required to run the project
+```
 
 ## Features
 --------
