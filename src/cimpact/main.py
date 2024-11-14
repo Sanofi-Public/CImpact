@@ -39,12 +39,23 @@ class CausalImpactAnalysis:
     pre_period = ['2019-04-16', '2019-07-14']
     post_period = ['2019-07-15', '2019-08-01']
 
+    # Define color variables
+    observed_color = "#000000"         # Black for observed
+    predicted_color = "#7A00E6"        # Sanofi purple for predicted
+    ci_color = "#D9B3FF66"             # Light lavender with transparency for CI
+    intervention_color = "#444444"     # Dark gray for intervention
+    figsize = (10,7)
+
     analysis = CausalImpactAnalysis(data,
                 pre_period,
                 post_period,
                 model_config,
                 index_col,
-                target_col
+                target_col,
+                observed_color, 
+                predicted_color,
+                ci_color, 
+                intervention_color
                 )
     result = analysis.run_analysis()
     print(result)
@@ -85,7 +96,18 @@ class CausalImpactAnalysis:
 
 
     #pylint: disable=too-many-instance-attributes, too-many-arguments
-    def __init__(self, data, pre_period, post_period, config, index_col, target_col):
+    def __init__(self, 
+                data, 
+                pre_period, 
+                post_period, 
+                config, 
+                index_col,
+                target_col, 
+                observed_color="#1E90FF", 
+                predicted_color="#FF4500",
+                ci_color="#FFDAB966", 
+                intervention_color="#8B0000",
+                figsize=(10, 7)):
         self.data = data
         self.pre_period = pre_period
         self.post_period = post_period
@@ -96,6 +118,11 @@ class CausalImpactAnalysis:
             [col for col in data.columns if col not in [index_col, target_col]]
         ]
         self.model = None
+        self.observed_color = observed_color
+        self.predicted_color = predicted_color
+        self.ci_color = ci_color
+        self.intervention_color = intervention_color
+        self.figsize = figsize
 
     def initialize_model(self):
         """
@@ -131,10 +158,11 @@ class CausalImpactAnalysis:
         summary = self.generate_summary(post_pred, forecast_dist)
         plot = self.model.plot(
                     combined_predictions,
-                    observed_color="#1E90FF",       # Dodger blue for observed
-                    predicted_color="#FF4500",      # Orange-red for predicted
-                    ci_color=(255/255, 223/255, 186/255, 0.4),  # Peach for confidence interval
-                    intervention_color="#8B0000"    # Dark red for intervention
+                    observed_color=self.observed_color,       # Dodger blue for observed
+                    predicted_color=self.predicted_color,      # Orange-red for predicted
+                    ci_color=self.ci_color,  # Peach for confidence interval
+                    intervention_color=self.intervention_color,    # Dark red for intervention
+                    figsize=self.figsize
                 )
         return summary, plot
 

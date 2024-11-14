@@ -65,46 +65,46 @@ class BaseModel(ABC):
 
     def plot(
         self,
-        combined_predictions=None,
-        observed_color="#000000",            # Sanofi's black
-        predicted_color="#7A00E6",           # Sanofi's purple
-        ci_color=(217/255, 179/255, 255/255, 0.4),  # Light purple with transparency for confidence interval
-        intervention_color="#444444",        # Dark gray for intervention line
-        figsize=(10, 7)
+        combined_predictions,
+        observed_color,           # Sanofi's black
+        predicted_color,          # Sanofi's purple
+        ci_color,                 # Light purple with transparency for confidence interval
+        intervention_color,       # Dark gray for intervention line
+        figsize
     ):
         """
         Function to plot the results with Sanofi brand color options.
 
-        Example Color Palettes:
+        Recommended Color Palettes:
 
         1. **Sanofi Brand Colors** (Purple and Black)
         observed_color: "#000000" (Black)
         predicted_color: "#7A00E6" (Sanofi purple)
-        ci_color: (217/255, 179/255, 255/255, 0.4) (Light lavender with transparency)
+        ci_color: "#D9B3FF66" (Light lavender with transparency)
         intervention_color: "#444444" (Dark gray)
 
         2. **Purple Theme**
         observed_color: "#6A0DAD" (Dark purple)
         predicted_color: "#9C27B0" (Medium purple)
-        ci_color: (230/255, 179/255, 230/255, 0.4) (Lavender with transparency)
+        ci_color: "#E6B3E666" (Lavender with transparency)
         intervention_color: "#8A2BE2" (Blue-purple)
 
         3. **Orange Theme**
         observed_color: "#FF4500" (Orange-red)
         predicted_color: "#FF8C00" (Dark orange)
-        ci_color: (255/255, 218/255, 185/255, 0.4) (Peach with transparency)
+        ci_color: "#FFDAB966" (Peach with transparency)
         intervention_color: "#D2691E" (Chocolate)
 
         4. **Blue Theme**
         observed_color: "#1E90FF" (Dodger blue)
         predicted_color: "#4682B4" (Steel blue)
-        ci_color: (176/255, 196/255, 222/255, 0.4) (Light steel blue with transparency)
+        ci_color: "#B0C4DE66" (Light steel blue with transparency)
         intervention_color: "#4169E1" (Royal blue)
 
         5. **Green Theme**
         observed_color: "#228B22" (Forest green)
         predicted_color: "#32CD32" (Lime green)
-        ci_color: (152/255, 251/255, 152/255, 0.4) (Pale green with transparency)
+        ci_color: "#98FB9866" (Pale green with transparency)
         intervention_color: "#006400" (Dark green)
         """
         if self.inferences is None:
@@ -126,11 +126,11 @@ class BaseModel(ABC):
             if panel == "original":
                 ax.plot(full_data.index, full_data, color=observed_color, label="Observed")
                 ax.plot(full_data.index, predicted_means, linestyle="--", color=predicted_color, label="Predicted")
-                ax.fill_between(full_data.index, ci_lower_full, ci_upper_full, color=ci_color, alpha=0.3)
+                ax.fill_between(full_data.index, ci_lower_full, ci_upper_full, color=ci_color)
             
             elif panel == "pointwise":
                 ax.plot(full_data.index, predicted_means, linestyle="--", color=predicted_color, label="Point effects")
-                ax.fill_between(full_data.index, ci_lower_full, ci_upper_full, color=ci_color, alpha=0.3)
+                ax.fill_between(full_data.index, ci_lower_full, ci_upper_full, color=ci_color)
             
             elif panel == "cumulative":
                 point_effects_post = self.post_data[self.target_col].values - predicted_means[-len(self.post_data):]
@@ -141,7 +141,6 @@ class BaseModel(ABC):
                     cumulative_effects - 1.96 * np.std(cumulative_effects),
                     cumulative_effects + 1.96 * np.std(cumulative_effects),
                     color=ci_color,
-                    alpha=0.3,
                 )
                 ax.axhline(y=0, color=intervention_color, linestyle="--")
 

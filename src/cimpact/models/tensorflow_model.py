@@ -76,7 +76,6 @@ class TensorFlowModel(BaseModel):
                 self.samples, elbo_loss_curve = self.fit_with_vi(
                     pre_data[self.target_col]
                 )
-                print("ELBO Loss Curve:", elbo_loss_curve)
             else:
                 raise ValueError(f"Unsupported fit method: {fit_method}")
             print("Model fitting completed successfully.")
