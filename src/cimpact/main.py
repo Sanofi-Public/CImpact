@@ -129,7 +129,13 @@ class CausalImpactAnalysis:
             raise ValueError("Prediction failed.")
         self.model.postprocess_results(post_pred, pre_pred, combined_predictions)
         summary = self.generate_summary(post_pred, forecast_dist)
-        plot = self.model.plot(combined_predictions)
+        plot = self.model.plot(
+                    combined_predictions,
+                    observed_color="#1E90FF",       # Dodger blue for observed
+                    predicted_color="#FF4500",      # Orange-red for predicted
+                    ci_color=(255/255, 223/255, 186/255, 0.4),  # Peach for confidence interval
+                    intervention_color="#8B0000"    # Dark red for intervention
+                )
         return summary, plot
 
     def preprocess(self):
