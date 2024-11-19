@@ -13,18 +13,17 @@ CImpact - Causal Inference for Measuring Performance and Causal Trends
 
 [](LICENSE)
 
-CImpact is a modular causal impact analysis library for Python, supporting multiple time series models, including TensorFlow, Prophet, and Pyro. It provides a flexible framework for estimating the causal effect of an intervention on time series data.
+CImpact is a modular causal impact analysis library for Python, supporting multiple time series models, including [TensorFlow](https://www.tensorflow.org/probability/overview) , [Prophet](https://facebook.github.io/prophet/), and [Pyro](https://pyro.ai/examples/). It provides a flexible framework for estimating the causal effect of an intervention on time series data.
 
 Table of Contents
 -----------------
 
 -   [Introduction](#introduction)
--   [Code Structure](#code-structure)
 -   [Features](#features)
 -   [Why CImpact?](#why-cimpact)
+-   [Code Structure](#code-structure)
 -   [Installation](#installation)
 -   [Getting Started](#getting-started)
-    -   [Model Configurations](#model-configurations)
     -   [Example Usage](#example-usage)
 -   [Evaluation Methods](#evaluation-methods)
 -   [Performance Comparison](#performance-comparison)
@@ -37,6 +36,21 @@ Table of Contents
 ------------
 
 CImpact is designed to help analysts and data scientists assess the impact of an intervention on time series data. By leveraging different statistical models, CImpact aims to provide robust causal inference results, accommodating various use cases and preferences in model selection.
+
+
+## Why CImpact?
+------------
+
+CImpact extends the functionalities of the [tfcausalimpact](https://github.com/WillianFuks/tfcausalimpact) library by incorporating support for multiple modeling approaches. This modular design allows users to choose the best model for their specific needs and compare performance and results across different models. We highly recommend reading this detailed [blog post](https://towardsdatascience.com/implementing-causal-impact-on-top-of-tensorflow-probability-c837ea18b126) explainng the causal inference in great detail.
+
+## Features
+--------
+
+-   **Support for Multiple Models**: Utilize TensorFlow, Prophet, or Pyro models according to your needs.
+-   **Modular Design**: Easily extend the library with new models due to its adapter-based architecture.
+-   **Flexible Configuration**: Customize model settings and hyperparameters to suit specific analysis requirements.
+-   **Comprehensive Evaluation**: Integrated methods for assessing model performance and the causal impact of interventions.
+-   **Enhanced Visualization**: Generate insightful plots for better interpretation of results.
 
 ## Code Structure
 ------------
@@ -62,109 +76,65 @@ CImpact/
 ├── requirements.txt              # List of Python dependencies required to run the project
 ```
 
-## Features
---------
-
--   **Support for Multiple Models**: Utilize TensorFlow, Prophet, or Pyro models according to your needs.
--   **Modular Design**: Easily extend the library with new models due to its adapter-based architecture.
--   **Flexible Configuration**: Customize model settings and hyperparameters to suit specific analysis requirements.
--   **Comprehensive Evaluation**: Integrated methods for assessing model performance and the causal impact of interventions.
--   **Enhanced Visualization**: Generate insightful plots for better interpretation of results.
-
-## Why CImpact?
-------------
-
-CImpact extends the functionalities of the [tfcausalimpact](https://github.com/WillianFuks/tfcausalimpact) library by incorporating support for multiple modeling approaches. This modular design allows users to choose the best model for their specific needs and compare performance and results across different models. We highly recommend reading this detailed [blog post](https://towardsdatascience.com/implementing-causal-impact-on-top-of-tensorflow-probability-c837ea18b126) explainng the causal inference in great detail.
-
 ## Installation
 ------------
 
-Install CImpact using `pip` (pre-asumption is that pip is already installed in user's space):
+CImpact can be installed using one of the following methods:
+
+### 1. Stable Release (Coming Soon)
+
+The stable release of CImpact will soon be available on PyPI. Once published, you can install it with:
 
 ```bash
 pip install cimpact
 ```
 
+Stay tuned for updates on the stable release!
+
+### 2. Latest Release (Manual Installation)
+
+To access the latest features or contribute to development, you can manually install CImpact by building it from source. Follow the steps below:
+
+**Step 1: Clone the Repository**
+
+Clone the CImpact repository to your local machine:
+
+```bash
+git clone https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference.git
+cd oneai-com-turing-causal_inference
+```
+
+**Step 2: Install Dependencies** 
+
+Install the required dependencies listed in the `requirements.txt` file:
+
+```bash
+pip install -r requirements.txt
+```
+
+**Step 3: Build the Wheel File** 
+
+Build the library into a Python Wheel file:
+
+```bash
+python -m build
+```
+
+The generated `.whl` file will be located in the `dist/` directory.
+
+**Step 4: Install the Wheel File** 
+
+Use `pip` to install the wheel file:
+
+```bash
+pip install dist/cimpact-<version>.whl
+```
+
+Replace `<version>` with the version number of the generated `.whl` file. This will install the cimpact library in your environment and now you can use it using the following steps. 
+
 
 ## Getting Started
 ---------------
-
-## Model Configurations
-
-CImpact allows you to configure the underlying models to suit your analysis needs. Below are the configuration options for each supported model.
-
-#### TensorFlow Model (Bayesian Structural Time Series)
-
-Configure the TensorFlow model using the following parameters:
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `standardize` | `bool` | `True` | Whether to standardize the data before modeling. |
-| `learning_rate` | `float` | `0.01` | Learning rate for the optimizer. |
-| `num_variational_steps` | `int` | `1000` | Number of steps for variational inference. |
-| `fit_method` | `str` | `'vi'` | Method for fitting the model. Options are `'vi'` (Variational Inference) and `'hmc'` (Hamiltonian Monte Carlo). |
-
-**Example Configuration:**
-
-```python
-model_config = {
-    'model_type': 'tensorflow',
-    'model_args': {
-        'standardize': True,
-        'learning_rate': 0.01,
-        'num_variational_steps': 1000,
-        'fit_method': 'vi'
-    }
-}
-```
-
-#### Prophet Model
-
-Configure the Prophet model with the following parameters:
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `standardize` | `bool` | `True` | Whether to standardize the data before modeling. |
-| Additional Parameters | - | - | Pass any additional parameters supported by Prophet (e.g., `seasonality_mode`, `holidays`). |
-
-**Example Configuration:**
-
-```python
-model_config = {
-    'model_type': 'prophet',
-    'model_args': {
-        'standardize': True,
-        'seasonality_mode': 'multiplicative',
-        'weekly_seasonality': True,
-        'holidays': your_holidays_dataframe
-    }
-}
-```
-
-#### Pyro Model
-
-Configure the Pyro model using the following parameters:
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `standardize` | `bool` | `True` | Whether to standardize the data before modeling. |
-| `learning_rate` | `float` | `0.01` | Learning rate for the optimizer. |
-| `num_iterations` | `int` | `1000` | Number of iterations for training. |
-| `num_samples` | `int` | `1000` | Number of samples to draw for prediction. |
-
-**Example Configuration:**
-
-```python
-model_config = {
-    'model_type': 'pyro',
-    'model_args': {
-        'standardize': True,
-        'learning_rate': 0.01,
-        'num_iterations': 1000,
-        'num_samples': 1000
-    }
-}
-```
 
 ### Example Usage
 
@@ -197,11 +167,19 @@ post_period = ['2020-03-14', '2020-03-31']
 index_col = 'date'
 target_col = 'y'
 
+# Define color variables (optional arguments)
+observed_color = "#000000"         # Black for observed
+predicted_color = "#7A00E6"        # Sanofi purple for predicted
+ci_color = "#D9B3FF66"             # Light lavender with transparency for CI
+intervention_color = "#444444"     # Dark gray for intervention
+figsize = (10,7)
+
 # Run the analysis
-analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col)
+analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col, observed_color,  predicted_color, ci_color, intervention_color)
 result = analysis.run_analysis()
 print(result)
 ```
+
 
 ##### Outcome
 
@@ -222,114 +200,8 @@ Posterior inference {CIMpact}
 | **Posterior probability of a causal effect:** | 84.16%      |                  |
 
 
-#### Pyro model
-
-```python
-
-import pandas as pd
-from cimpact import CausalImpactAnalysis
-
-# Load your data
-data = pd.read_csv('https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/google_data.csv')
-
-# Define the configuration for the model
-model_config = {
-    'model_type': 'pyro',
-    'model_args': {
-        'standardize': True,
-        'learning_rate': 0.01,
-        'num_iterations': 1000,
-        'num_samples': 1000
-    }
-}
-
-# Define the pre and post-intervention periods
-pre_period = ['2020-01-01', '2020-03-13']
-post_period = ['2020-03-14', '2020-03-31']
-
-#Define index column and target column
-index_col = 'date'
-target_col = 'y'
-
-# Run the analysis
-analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col)
-result = analysis.run_analysis()
-print(result)
-```
-
-##### Outcome
-
-![Result visualization for Tensorflow model](https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/results/pyro_google_data_results.png "Result visualization for Tensorflow model")
-
-Posterior inference {CIMpact}
-
-|                                       | Average               | Cumulative         |
-|---------------------------------------|-----------------------|--------------------|
-| **Actual**                            | 145                  | 2,614             |
-| **Prediction (s.d.)**                 | 130 (718)            | 2,348 (718)       |
-| **95% CI**                            | [-2,485, 2,853]      | [-2,485, 2,853]   |
-| **Absolute effect (s.d.)**            | 15 (717)             | 266 (717)         |
-| **95% CI**                            | [-1,315, 1,211]      | [-1,315, 1,211]   |
-| **Relative effect (s.d.)**            | -73.12% (80.40%)     | -1316.23% (80.40%) |
-| **95% CI**                            | [-161.97%, 192.83%]  | [-161.97%, 192.83%] |
-| **Posterior tail-area probability p:** | 0.33167             |                    |
-| **Posterior probability of a causal effect:** | 66.83%           |                    |
-
-***Note:** As you can see here, not all models will result into good results! You need to finetune model config to get the best possible result with the model. 
-
-#### Prophet model
-
-```python
-
-import pandas as pd
-from cimpact import CausalImpactAnalysis
-
-# Load your data
-data = pd.read_csv('https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/google_data.csv')
-
-# Define the configuration for the model
-model_config = {
-    'model_type': 'prophet',
-    'model_args': {
-        'standardize': True,
-        'learning_rate': 0.01,
-        'num_variational_steps': 1000,
-        'weekly_seasonality': False,
-    }
-}
-
-# Define the pre and post-intervention periods
-pre_period = ['2020-01-01', '2020-03-13']
-post_period = ['2020-03-14', '2020-03-31']
-
-#Define index column and target column
-index_col = 'date'
-target_col = 'y'
-
-# Run the analysis
-analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col)
-result = analysis.run_analysis()
-print(result)
-
-```
-##### Outcome
-
-![Result visualization for Tensorflow model](https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/results/prophet_google_data_results.png "Result visualization for Tensorflow model")
-
-Posterior inference {CIMpact}
-
-|                                       | Average             | Cumulative       |
-|---------------------------------------|---------------------|------------------|
-| **Actual**                            | 145                | 2,614           |
-| **Prediction (s.d.)**                 | 170 (7)            | 3,064 (7)       |
-| **95% CI**                            | [142, 195]         | [142, 195]      |
-| **Absolute effect (s.d.)**            | -25 (14)           | -450 (14)       |
-| **95% CI**                            | [-49, 2]           | [-49, 2]        |
-| **Relative effect (s.d.)**            | -14.55% (8.08%)    | -261.88% (8.08%) |
-| **95% CI**                            | [-28.03%, 1.38%]   | [-28.03%, 1.38%] |
-| **Posterior tail-area probability p:** | 0.00000           |                  |
-| **Posterior probability of a causal effect:** | 100.00%      |                  |
-
+> [!NOTE]  
+> Please refer to `examples/how-to-use.md` for detailed model configuration instructions and additional usage examples of the library.
 
 ## Evaluation Methods
 ------------------
@@ -352,10 +224,11 @@ Our performance comparisons highlight:
 ## Future Plans
 ------------
 
--   **Expand Model Support**: Incorporate additional models to broaden analytical options.
--   **Enhanced Visualization**: Develop advanced plotting functions for deeper insights.
--   **Documentation**: Provide detailed documentation and tutorials.
--   **Community Engagement**: Encourage contributions to extend and refine the library.
+We welcome contributions to enhance and refine the library. While we are particularly interested in contributions in the following areas, we are open to other suggestions as well. If you have any ideas, please create an issue to discuss potential contributions.
+
+- Add new, qualified models to broaden analytical options. We are currently exploring zero-shot learning models like [Google timesfm](https://github.com/google-research/timesfm) or [Amazon Chronos](https://www.amazon.science/code-and-datasets/chronos-learning-the-language-of-time-series).
+- Enhanced Visualization**: Develop advanced plotting functions for deeper insights and a better understanding of results.
+- Publish detailed tutorials to help users in effectively utilizing the library.
 
 ## Contributing
 ------------
