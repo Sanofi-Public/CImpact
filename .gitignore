@@ -9,4 +9,3 @@ data/*
 dist/*
 .vscode/
 *.ipynb
-*.csv
