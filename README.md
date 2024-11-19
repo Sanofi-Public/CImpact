@@ -131,10 +131,7 @@ pip install dist/cimpact-<version>.whl
 ```
 
 Replace `<version>` with the version number of the generated `.whl` file. This will install the cimpact library in your environment and now you can use it using the following steps. 
-pip install dist/cimpact-<version>.whl
-```
 
-Replace `<version>` with the version number of the generated `.whl` file. This will install the cimpact library in your environment and now you can use it using the following steps. 
 
 ## Getting Started
 ---------------
@@ -229,7 +226,7 @@ Our performance comparisons highlight:
 
 We welcome contributions to enhance and refine the library. While we are particularly interested in contributions in the following areas, we are open to other suggestions as well. If you have any ideas, please create an issue to discuss potential contributions.
 
-- Add new, qualified models to broaden analytical options. We are currently exploring zero-shot learning models like ![Google timesfm](https://github.com/google-research/timesfm) or ![Amazon Chronos](https://www.amazon.science/code-and-datasets/chronos-learning-the-language-of-time-series).
+- Add new, qualified models to broaden analytical options. We are currently exploring zero-shot learning models like [Google timesfm](https://github.com/google-research/timesfm) or [Amazon Chronos](https://www.amazon.science/code-and-datasets/chronos-learning-the-language-of-time-series).
 - Enhanced Visualization**: Develop advanced plotting functions for deeper insights and a better understanding of results.
 - Publish detailed tutorials to help users in effectively utilizing the library.
 
