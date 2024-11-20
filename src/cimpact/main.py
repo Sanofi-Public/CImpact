@@ -103,10 +103,10 @@ class CausalImpactAnalysis:
                 config, 
                 index_col,
                 target_col, 
-                observed_color="#1E90FF", 
-                predicted_color="#FF4500",
-                ci_color="#FFDAB966", 
-                intervention_color="#8B0000",
+                observed_color="#000000", 
+                predicted_color="#7A00E6",
+                ci_color="#D9B3FF66", 
+                intervention_color="#444444",
                 figsize=(10, 7)):
         self.data = data
         self.pre_period = pre_period
