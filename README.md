@@ -57,7 +57,6 @@ CImpact extends the functionalities of the [tfcausalimpact](https://github.com/W
 
 ```plaintext
 CImpact/
-├── .checkmarx/scan_results       # Contains results from code scanning for security and quality issues
 ├── .github/                      # GitHub configuration files for workflows and actions
 ├── assets/                       # Stores media assets, such as the project logo, used in the README or documentation
 ├── examples/                     # Example scripts showcasing usage of the library and sample data for testing

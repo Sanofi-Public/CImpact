@@ -30,7 +30,3 @@ jobs:
       - name: Build Wheel
         if: ${{ github.event_name == 'pull_request' || (github.ref == 'refs/heads/main' && github.event_name == 'push') }}
         run: python -m build
-      # - name: Push to JFrog
-      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      #   run: |
-      #     twine upload --repository-url ${{ secrets.JFROG_REPO_URL }} -u ${{ secrets.JFROG_USER }} -p ${{ secrets.JFROG_PWD }} dist/*
