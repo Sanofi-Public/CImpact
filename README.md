@@ -145,7 +145,7 @@ import pandas as pd
 from cimpact import CausalImpactAnalysis
 
 # Load your data
-data = pd.read_csv('https://github.com/Sanofi-Public/CImpact/blob/master/examples/google_data.csv')
+data = pd.read_csv('https://raw.githubusercontent.com/Sanofi-Public/CImpact/master/examples/google_data.csv')
 
 # Define the configuration for the model
 model_config = {
