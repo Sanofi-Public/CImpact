@@ -257,6 +257,6 @@ class CausalImpactAnalysis:
     Posterior tail-area probability p: {tail_area_prob:.5f}
     Posterior probability of a causal effect: {causal_effect_prob:.2%}
 
-    For more details, type: summary(impact, "report")"""
+    """
 
         return summary
