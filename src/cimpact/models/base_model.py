@@ -118,8 +118,8 @@ class BaseModel(ABC):
             if combined_predictions is not None
             else self.inferences["predicted_mean"]
         )
-        ci_lower_full = predicted_means - 1.95 * np.std(predicted_means) # fix on curves at 95% iso 96%
-        ci_upper_full = predicted_means + 1.95 * np.std(predicted_means) # fix on curves at 95% iso 96%
+        ci_lower_full = (predicted_means - full_data) - 1.95 * np.std(predicted_means-full_data) # fix on curves at 95% iso 96% and predicted - full_data
+        ci_upper_full = (predicted_means - full_data) + 1.95 * np.std(predicted_means-full_data) # fix on curves at 95% iso 96% and predicted - full_data
 
         for i, panel in enumerate(["original", "pointwise", "cumulative"]):
             ax = axs[i]
