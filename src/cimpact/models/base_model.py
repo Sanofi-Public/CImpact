@@ -118,8 +118,8 @@ class BaseModel(ABC):
             if combined_predictions is not None
             else self.inferences["predicted_mean"]
         )
-        ci_lower_full = predicted_means - 1.96 * np.std(predicted_means)
-        ci_upper_full = predicted_means + 1.96 * np.std(predicted_means)
+        ci_lower_full = predicted_means - 1.95 * np.std(predicted_means) # fix on curves at 95% iso 96%
+        ci_upper_full = predicted_means + 1.95 * np.std(predicted_means) # fix on curves at 95% iso 96%
 
         for i, panel in enumerate(["original", "pointwise", "cumulative"]):
             ax = axs[i]
@@ -129,7 +129,7 @@ class BaseModel(ABC):
                 ax.fill_between(full_data.index, ci_lower_full, ci_upper_full, color=ci_color)
             
             elif panel == "pointwise":
-                ax.plot(full_data.index, predicted_means, linestyle="--", color=predicted_color, label="Point effects")
+                ax.plot(full_data.index, predicted_means-full_data, linestyle="--", color=predicted_color, label="Point effects") # fix predicted_means-full_data iso predicted_means
                 ax.fill_between(full_data.index, ci_lower_full, ci_upper_full, color=ci_color)
             
             elif panel == "cumulative":
@@ -138,8 +138,8 @@ class BaseModel(ABC):
                 ax.plot(self.post_data.index, cumulative_effects, linestyle="--", color=predicted_color, label="Cumulative Effects")
                 ax.fill_between(
                     self.post_data.index,
-                    cumulative_effects - 1.96 * np.std(cumulative_effects),
-                    cumulative_effects + 1.96 * np.std(cumulative_effects),
+                    cumulative_effects - 1.95 * np.std(cumulative_effects), # fix on curves at 95% iso 96%
+                    cumulative_effects + 1.95 * np.std(cumulative_effects), # fix on curves at 95% iso 96%
                     color=ci_color,
                 )
                 ax.axhline(y=0, color=intervention_color, linestyle="--")
