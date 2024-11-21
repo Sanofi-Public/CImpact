@@ -121,8 +121,8 @@ class BaseModel(ABC):
         ci_lower_full = predicted_means - 1.96 * np.std(predicted_means) 
         ci_upper_full = predicted_means + 1.96 * np.std(predicted_means) 
         
-        ci_lower_effect = (predicted_means - full_data) - 1.96 * np.std(predicted_means-full_data) #  predicted - full_data
-        ci_upper_effect = (predicted_means - full_data) + 1.96 * np.std(predicted_means-full_data) #  predicted - full_data
+        ci_lower_effect = (full_data - predicted_means ) - 1.96 * np.std(full_data - predicted_means ) #  predicted - full_data
+        ci_upper_effect = (full_data - predicted_means ) + 1.96 * np.std(full_data - predicted_means ) #  predicted - full_data
 
         for i, panel in enumerate(["original", "pointwise", "cumulative"]):
             ax = axs[i]
@@ -132,7 +132,7 @@ class BaseModel(ABC):
                 ax.fill_between(full_data.index, ci_lower_full, ci_upper_full, color=ci_color)
             
             elif panel == "pointwise":
-                ax.plot(full_data.index, predicted_means-full_data, linestyle="--", color=predicted_color, label="Point effects") # fix predicted_means-full_data iso predicted_means
+                ax.plot(full_data.index, full_data-predicted_means, linestyle="--", color=predicted_color, label="Point effects") # fix predicted_means-full_data iso predicted_means
                 ax.fill_between(full_data.index, ci_lower_effect, ci_upper_effect, color=ci_color)
             
             elif panel == "cumulative":
