@@ -118,8 +118,11 @@ class BaseModel(ABC):
             if combined_predictions is not None
             else self.inferences["predicted_mean"]
         )
-        ci_lower_full = (predicted_means - full_data) - 1.95 * np.std(predicted_means-full_data) # fix on curves at 95% iso 96% and predicted - full_data
-        ci_upper_full = (predicted_means - full_data) + 1.95 * np.std(predicted_means-full_data) # fix on curves at 95% iso 96% and predicted - full_data
+        ci_lower_full = predicted_means - 1.96 * np.std(predicted_means) 
+        ci_upper_full = predicted_means + 1.96 * np.std(predicted_means) 
+        
+        ci_lower_effect = (predicted_means - full_data) - 1.96 * np.std(predicted_means-full_data) #  predicted - full_data
+        ci_upper_effect = (predicted_means - full_data) + 1.96 * np.std(predicted_means-full_data) #  predicted - full_data
 
         for i, panel in enumerate(["original", "pointwise", "cumulative"]):
             ax = axs[i]
@@ -130,7 +133,7 @@ class BaseModel(ABC):
             
             elif panel == "pointwise":
                 ax.plot(full_data.index, predicted_means-full_data, linestyle="--", color=predicted_color, label="Point effects") # fix predicted_means-full_data iso predicted_means
-                ax.fill_between(full_data.index, ci_lower_full, ci_upper_full, color=ci_color)
+                ax.fill_between(full_data.index, ci_lower_effect, ci_upper_effect, color=ci_color)
             
             elif panel == "cumulative":
                 point_effects_post = self.post_data[self.target_col].values - predicted_means[-len(self.post_data):]
@@ -138,8 +141,8 @@ class BaseModel(ABC):
                 ax.plot(self.post_data.index, cumulative_effects, linestyle="--", color=predicted_color, label="Cumulative Effects")
                 ax.fill_between(
                     self.post_data.index,
-                    cumulative_effects - 1.95 * np.std(cumulative_effects), # fix on curves at 95% iso 96%
-                    cumulative_effects + 1.95 * np.std(cumulative_effects), # fix on curves at 95% iso 96%
+                    cumulative_effects - 1.96 * np.std(cumulative_effects),
+                    cumulative_effects + 1.96 * np.std(cumulative_effects), 
                     color=ci_color,
                 )
                 ax.axhline(y=0, color=intervention_color, linestyle="--")
