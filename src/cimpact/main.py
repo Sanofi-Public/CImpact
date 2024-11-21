@@ -251,7 +251,7 @@ class CausalImpactAnalysis:
     95% CI                  [{np.mean(abs_effect)-1.96*np.std(abs_effect):,.0f}, {np.mean(abs_effect)+1.96*np.std(abs_effect):,.0f}]            [{np.sum(abs_effect)-1.96*np.std(cum_effect):,.0f}, {np.sum(abs_effect)+1.96*np.std(cum_effect):,.0f}]
 
     Relative effect (s.d.)  {np.mean(rel_effect):.2f}% (std {np.std(rel_effect):.2f}%)   {cumulative_rel_effect:.2f}% (std {np.std(rel_effect):.2f}%)
-    95% CI                  [{np.mean(rel_effect)-1.96*np.std(rel_effect):.2f}%, {np.mean(rel_effect)+1.96*np.std(rel_effect):.2f}%]          
+    95% CI                  [{np.mean(rel_effect)-1.96*np.std(rel_effect):.2f}%, {np.mean(rel_effect)+1.96*np.std(rel_effect):.2f}%]            [{(np.sum(abs_effect)-1.96*np.std(cum_effect))/np.sum(predicted_mean):,.0f}, {(np.sum(abs_effect)+1.96*np.std(cum_effect))/np.sum(predicted_mean):,.0f}]          
 
     Posterior tail-area probability p: {tail_area_prob:.5f}
     Posterior probability of a causal effect: {causal_effect_prob:.2%}
