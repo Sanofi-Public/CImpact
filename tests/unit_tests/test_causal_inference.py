@@ -100,3 +100,8 @@ class TestUtils(unittest.TestCase):
         self.assertIn("Posterior inference", result)
         self.assertIn("95% CI", result)
         self.assertIn("Posterior tail-area probability p:", result)
+
+
+if __name__ == '__main__':
+    test = TestUtils()
+    test.test_prophet_causal_inference()

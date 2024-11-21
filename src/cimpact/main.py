@@ -234,8 +234,7 @@ class CausalImpactAnalysis:
 
 
 
-        ci_effect_lower = abs_effect - 1.96 * np.std(abs_effect)
-        ci_effect_upper = abs_effect + 1.96 * np.std(abs_effect)
+        cum_effect = np.cumsum(abs_effect)
 
         cumulative_rel_effect = np.sum(abs_effect) / np.sum(predicted_mean) * 100
 
@@ -248,8 +247,8 @@ class CausalImpactAnalysis:
     Prediction (s.d.)       {np.mean(predicted_mean):,.0f} (std {np.std(predicted_mean):,.0f})      {np.sum(predicted_mean):,.0f} ({np.std(predicted_mean):,.0f})
     95% CI                  [{np.min(ci_lower):,.0f}, {np.max(ci_upper):,.0f}]   [{np.min(ci_lower):,.0f}, {np.max(ci_upper):,.0f}]
 
-    Absolute effect (s.d.)  {np.mean(abs_effect):,.0f} (std {np.std(abs_effect):,.0f})       {np.sum(abs_effect):,.0f} (std {np.std(abs_effect):,.0f})
-    95% CI                  [{np.mean(abs_effect)-1.96*np.std(abs_effect):,.0f}, {np.mean(abs_effect)+1.96*np.std(abs_effect):,.0f}]     
+    Absolute effect (s.d.)  {np.mean(abs_effect):,.0f} (std {np.std(abs_effect):,.0f})       {np.sum(abs_effect):,.0f} (std {np.std(cum_effect):,.0f})
+    95% CI                  [{np.mean(abs_effect)-1.96*np.std(abs_effect):,.0f}, {np.mean(abs_effect)+1.96*np.std(abs_effect):,.0f}]            [{np.sum(abs_effect)-1.96*np.std(cum_effect):,.0f}, {np.sum(abs_effect)+1.96*np.std(cum_effect):,.0f}]
 
     Relative effect (s.d.)  {np.mean(rel_effect):.2f}% (std {np.std(rel_effect):.2f}%)   {cumulative_rel_effect:.2f}% (std {np.std(rel_effect):.2f}%)
     95% CI                  [{np.mean(rel_effect)-1.96*np.std(rel_effect):.2f}%, {np.mean(rel_effect)+1.96*np.std(rel_effect):.2f}%]          
