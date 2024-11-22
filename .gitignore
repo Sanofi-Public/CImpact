@@ -10,3 +10,5 @@ dist/*
 .vscode/
 *.ipynb
 *.csv
+.checkmarx/
+.checkmarx/scan_results/
