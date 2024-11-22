@@ -11,4 +11,4 @@ dist/*
 *.ipynb
 *.csv
 .checkmarx/
-.checkmarx/scan_results
+.checkmarx/scan_results/
