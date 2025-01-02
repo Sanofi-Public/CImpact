@@ -134,6 +134,8 @@ class BaseModel(ABC):
             elif panel == "pointwise":
                 ax.plot(full_data.index, full_data-predicted_means, linestyle="--", color=predicted_color, label="Point effects") # fix predicted_means-full_data iso predicted_means
                 ax.fill_between(full_data.index, ci_lower_effect, ci_upper_effect, color=ci_color)
+                ax.axhline(y=0, color="xkcd:light grey", linestyle="--")
+
             
             elif panel == "cumulative":
                 point_effects_post = self.post_data[self.target_col].values - predicted_means[-len(self.post_data):]
@@ -145,7 +147,7 @@ class BaseModel(ABC):
                     cumulative_effects + 1.96 * np.std(cumulative_effects), 
                     color=ci_color,
                 )
-                ax.axhline(y=0, color=intervention_color, linestyle="--")
+                ax.axhline(y=0, color="xkcd:light grey", linestyle="--")
 
             ax.axvline(self.data.index[self.pre_period[1]], color=intervention_color, linestyle="--", label="Intervention")
             ax.legend()
