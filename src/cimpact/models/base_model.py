@@ -70,8 +70,8 @@ class BaseModel(ABC):
         predicted_color,          # Sanofi's purple
         ci_color,                 # Light purple with transparency for confidence interval
         intervention_color,       # Dark gray for intervention line
-        figsize,
-        zscore
+        figsize,                  # Desired figure size
+        zscore                    # Zscore to plot confidence interval
     ):
         """
         Function to plot the results with Sanofi brand color options.

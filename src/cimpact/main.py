@@ -45,6 +45,7 @@ class CausalImpactAnalysis:
     ci_color = "#D9B3FF66"             # Light lavender with transparency for CI
     intervention_color = "#444444"     # Dark gray for intervention
     figsize = (10,7)
+    ci = 95                            # Confidence interval
 
     analysis = CausalImpactAnalysis(data,
                 pre_period,
@@ -55,7 +56,9 @@ class CausalImpactAnalysis:
                 observed_color, 
                 predicted_color,
                 ci_color, 
-                intervention_color
+                intervention_color,
+                figsize,
+                ci
                 )
     result = analysis.run_analysis()
     print(result)
@@ -129,6 +132,8 @@ class CausalImpactAnalysis:
 
     def calculate_zscore(self):
         """
+        Function to calcualte z-score for confiedence interval
+        
         The Z-score corresponds to the value in the standard normal distribution
         where the cumulative probability equals 1 − 𝛼/2, where α is the complement
         of the confidence level (e.g., for 95%, α=0.05).
