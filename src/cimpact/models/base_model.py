@@ -70,7 +70,8 @@ class BaseModel(ABC):
         predicted_color,          # Sanofi's purple
         ci_color,                 # Light purple with transparency for confidence interval
         intervention_color,       # Dark gray for intervention line
-        figsize
+        figsize,
+        zscore
     ):
         """
         Function to plot the results with Sanofi brand color options.
@@ -118,11 +119,11 @@ class BaseModel(ABC):
             if combined_predictions is not None
             else self.inferences["predicted_mean"]
         )
-        ci_lower_full = predicted_means - 1.96 * np.std(predicted_means) 
-        ci_upper_full = predicted_means + 1.96 * np.std(predicted_means) 
+        ci_lower_full = predicted_means - zscore * np.std(predicted_means) 
+        ci_upper_full = predicted_means + zscore * np.std(predicted_means) 
         
-        ci_lower_effect = (full_data - predicted_means ) - 1.96 * np.std(full_data - predicted_means ) #  predicted - full_data
-        ci_upper_effect = (full_data - predicted_means ) + 1.96 * np.std(full_data - predicted_means ) #  predicted - full_data
+        ci_lower_effect = (full_data - predicted_means ) - zscore * np.std(full_data - predicted_means ) #  predicted - full_data
+        ci_upper_effect = (full_data - predicted_means ) + zscore * np.std(full_data - predicted_means ) #  predicted - full_data
 
         for i, panel in enumerate(["original", "pointwise", "cumulative"]):
             ax = axs[i]
@@ -143,8 +144,8 @@ class BaseModel(ABC):
                 ax.plot(self.post_data.index, cumulative_effects, linestyle="--", color=predicted_color, label="Cumulative Effects")
                 ax.fill_between(
                     self.post_data.index,
-                    cumulative_effects - 1.96 * np.std(cumulative_effects),
-                    cumulative_effects + 1.96 * np.std(cumulative_effects), 
+                    cumulative_effects - zscore * np.std(cumulative_effects),
+                    cumulative_effects + zscore * np.std(cumulative_effects), 
                     color=ci_color,
                 )
                 ax.axhline(y=0, color="xkcd:light grey", linestyle="--")
@@ -168,7 +169,7 @@ class BaseModel(ABC):
         )
         return self.data, self.pre_data, self.post_data
 
-    def postprocess_results(self, forecast, pre_pred, combined_predictions): #pylint: disable=unused-argument
+    def postprocess_results(self, forecast, pre_pred, combined_predictions, zscore): #pylint: disable=unused-argument
         """
         Postprocess the model's results to generate inferences.
         """
@@ -185,8 +186,8 @@ class BaseModel(ABC):
 
         self.inferences = {
             "predicted_mean": forecast,
-            "ci_lower": forecast - 1.96 * np.std(forecast),  # Example calculation
-            "ci_upper": forecast + 1.96 * np.std(forecast),
+            "ci_lower": forecast - zscore * np.std(forecast),  # Example calculation
+            "ci_upper": forecast + zscore * np.std(forecast),
             "point_effects": forecast
             - self.post_data[self.target_col].values,  # Adjusted to match lengths
             "cumulative_effects": np.cumsum(
