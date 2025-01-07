@@ -61,7 +61,7 @@ class ProphetModel(BaseModel):
             future[cov] = self.data[cov].values
         forecast = self.model.predict(future)
 
-        pre_pred = forecast.iloc[: self.pre_period[1] + 1]["yhat"]
+        pre_pred = forecast.iloc[self.pre_period[0]: self.pre_period[1] + 1]["yhat"]
         post_pred = forecast.iloc[
             self.pre_period[1] + 1 : self.pre_period[1] + 1 + len(self.post_data)
         ]["yhat"]

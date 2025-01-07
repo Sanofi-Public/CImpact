@@ -127,7 +127,7 @@ class PyroModel(BaseModel):
         samples = predictive(covariates)
 
         forecast = samples["obs"].mean(axis=0).detach().numpy()
-        pre_pred = forecast[: self.pre_period[1] + 1]
+        pre_pred = forecast[self.pre_period[0]: self.pre_period[1] + 1]
         post_pred = forecast[self.pre_period[1] + 1 :]
         combined_predictions = np.concatenate([pre_pred, post_pred])
 

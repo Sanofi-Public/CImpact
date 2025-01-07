@@ -112,7 +112,7 @@ class BaseModel(ABC):
 
         fig, axs = plt.subplots(3, 1, figsize=figsize, sharex=True)
 
-        full_data = self.data[self.target_col]
+        full_data = self.data[self.pre_period[0]:][self.target_col]
         predicted_means = (
             combined_predictions
             if combined_predictions is not None

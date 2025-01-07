@@ -137,7 +137,7 @@ class TensorFlowModel(BaseModel):
             forecast_dist = tfp.sts.forecast(
                 model=self.model,
                 observed_time_series=self.data[self.target_col][
-                    : self.pre_period[1] + 1
+                    self.pre_period[0]: self.pre_period[1] + 1
                 ],  # Use pre-period data
                 parameter_samples=self.samples,
                 num_steps_forecast=len(
