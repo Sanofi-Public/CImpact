@@ -45,6 +45,7 @@ class CausalImpactAnalysis:
     ci_color = "#D9B3FF66"             # Light lavender with transparency for CI
     intervention_color = "#444444"     # Dark gray for intervention
     figsize = (10,7)
+    ci = 95                            # Confidence interval
 
     analysis = CausalImpactAnalysis(data,
                 pre_period,
@@ -55,7 +56,9 @@ class CausalImpactAnalysis:
                 observed_color, 
                 predicted_color,
                 ci_color, 
-                intervention_color
+                intervention_color,
+                figsize,
+                ci
                 )
     result = analysis.run_analysis()
     print(result)
@@ -107,7 +110,8 @@ class CausalImpactAnalysis:
                 predicted_color="#7A00E6",
                 ci_color="#D9B3FF66", 
                 intervention_color="#444444",
-                figsize=(10, 7)):
+                figsize=(10, 7),
+                ci=95):
         self.data = data
         self.pre_period = pre_period
         self.post_period = post_period
@@ -123,6 +127,24 @@ class CausalImpactAnalysis:
         self.ci_color = ci_color
         self.intervention_color = intervention_color
         self.figsize = figsize
+        self.ci = ci
+
+
+    def calculate_zscore(self):
+        """
+        Function to calcualte z-score for confiedence interval
+        
+        The Z-score corresponds to the value in the standard normal distribution
+        where the cumulative probability equals 1 − 𝛼/2, where α is the complement
+        of the confidence level (e.g., for 95%, α=0.05).
+        """
+        # Convert confidence level to decimal (e.g., 95 -> 0.95)
+        alpha = 1 - self.ci / 100
+        # Calculate the cumulative probability for one tail
+        cumulative_prob = 1 - (alpha / 2)
+        # Use NumPy's percentile approximation for standard normal distribution
+        z_score = np.percentile(np.random.normal(0, 1, 10**7), cumulative_prob * 100)
+        return z_score
 
     def initialize_model(self):
         """
@@ -154,7 +176,9 @@ class CausalImpactAnalysis:
         post_pred, pre_pred, combined_predictions, forecast_dist = self.model.predict()
         if post_pred is None or pre_pred is None or combined_predictions is None:
             raise ValueError("Prediction failed.")
-        self.model.postprocess_results(post_pred, pre_pred, combined_predictions)
+        
+        self.zscore = self.calculate_zscore()
+        self.model.postprocess_results(post_pred, pre_pred, combined_predictions, self.zscore)
         summary = self.generate_summary(post_pred, forecast_dist)
         plot = self.model.plot(
                     combined_predictions,
@@ -162,7 +186,8 @@ class CausalImpactAnalysis:
                     predicted_color=self.predicted_color,      # Orange-red for predicted
                     ci_color=self.ci_color,  # Peach for confidence interval
                     intervention_color=self.intervention_color,    # Dark red for intervention
-                    figsize=self.figsize
+                    figsize=self.figsize,
+                    zscore = self.zscore
                 )
         return summary, plot
 
@@ -207,33 +232,6 @@ class CausalImpactAnalysis:
 
         abs_effect = actual_post - predicted_mean
         rel_effect = abs_effect / predicted_mean * 100
-
-        
-
-    #     summary = f"""Summary results:
-
-    # Posterior inference {{CausalImpact}}
-
-    #                         Average          Cumulative
-    # Actual                  {np.mean(actual_post):,.0f}            {np.sum(actual_post):,.0f}
-    # Prediction (s.d.)       {np.mean(predicted_mean):,.0f} ({np.std(predicted_mean):,.0f})      {np.sum(predicted_mean):,.0f} ({np.std(predicted_mean):,.0f})
-    # 95% CI                  [{np.min(ci_lower):,.0f}, {np.max(ci_upper):,.0f}]   [{np.min(ci_lower):,.0f}, {np.max(ci_upper):,.0f}]
-
-    # Absolute effect (s.d.)  {np.mean(abs_effect):,.0f} ({np.std(abs_effect):,.0f})       {np.sum(abs_effect):,.0f} ({np.std(abs_effect):,.0f})
-    # 95% CI                  [{np.min(abs_effect):,.0f}, {np.max(abs_effect):,.0f}]     [{np.min(abs_effect):,.0f}, {np.max(abs_effect):,.0f}]
-
-    # Relative effect (s.d.)  {np.mean(rel_effect):.2f}% ({np.std(rel_effect):.2f}%)   {np.sum(rel_effect):.2f}% ({np.std(rel_effect):.2f}%)
-    # 95% CI                  [{np.min(rel_effect):.2f}%, {np.max(rel_effect):.2f}%]      [{np.min(rel_effect):.2f}%, {np.max(rel_effect):.2f}%]
-
-    # Posterior tail-area probability p: {tail_area_prob:.5f}
-    # Posterior probability of a causal effect: {causal_effect_prob:.2%}
-
-    # For more details, type: summary(impact, "report")"""
-        
-    # implemented for fixes - simplify report
-
-
-
         cum_effect = np.cumsum(abs_effect)
 
         cumulative_rel_effect = np.sum(abs_effect) / np.sum(predicted_mean) * 100
@@ -245,13 +243,13 @@ class CausalImpactAnalysis:
                             Average          Cumulative
     Actual                  {np.mean(actual_post):,.0f}            {np.sum(actual_post):,.0f}
     Prediction (s.d.)       {np.mean(predicted_mean):,.0f} (std {np.std(predicted_mean):,.0f})      {np.sum(predicted_mean):,.0f} ({np.std(predicted_mean):,.0f})
-    95% CI                  [{np.min(ci_lower):,.0f}, {np.max(ci_upper):,.0f}]   [{np.min(ci_lower):,.0f}, {np.max(ci_upper):,.0f}]
+    {self.ci}% CI                  [{np.min(ci_lower):,.0f}, {np.max(ci_upper):,.0f}]   [{np.min(ci_lower):,.0f}, {np.max(ci_upper):,.0f}]
 
     Absolute effect (s.d.)  {np.mean(abs_effect):,.0f} (std {np.std(abs_effect):,.0f})       {np.sum(abs_effect):,.0f} (std {np.std(cum_effect):,.0f})
-    95% CI                  [{np.mean(abs_effect)-1.96*np.std(abs_effect):,.0f}, {np.mean(abs_effect)+1.96*np.std(abs_effect):,.0f}]            [{np.sum(abs_effect)-1.96*np.std(cum_effect):,.0f}, {np.sum(abs_effect)+1.96*np.std(cum_effect):,.0f}]
+    {self.ci}% CI                  [{np.mean(abs_effect)-self.zscore*np.std(abs_effect):,.0f}, {np.mean(abs_effect)+self.zscore*np.std(abs_effect):,.0f}]            [{np.sum(abs_effect)-self.zscore*np.std(cum_effect):,.0f}, {np.sum(abs_effect)+self.zscore*np.std(cum_effect):,.0f}]
 
     Relative effect (s.d.)  {np.mean(rel_effect):.2f}% (std {np.std(rel_effect):.2f}%)   {cumulative_rel_effect:.2f}% (std {np.std(cum_effect)/np.sum(predicted_mean*1.)*100:.2f}%)
-    95% CI                  [{np.mean(rel_effect)-1.96*np.std(rel_effect):.2f}%, {np.mean(rel_effect)+1.96*np.std(rel_effect):.2f}%]            [{(np.sum(abs_effect)-1.96*np.std(cum_effect))/np.sum(predicted_mean*1.)*100:,.2f}%, {(np.sum(abs_effect)+1.96*np.std(cum_effect))/np.sum(predicted_mean*1.)*100:,.2f}%]          
+    {self.ci}% CI                  [{np.mean(rel_effect)-self.zscore*np.std(rel_effect):.2f}%, {np.mean(rel_effect)+self.zscore*np.std(rel_effect):.2f}%]            [{(np.sum(abs_effect)-self.zscore*np.std(cum_effect))/np.sum(predicted_mean*1.)*100:,.2f}%, {(np.sum(abs_effect)+self.zscore*np.std(cum_effect))/np.sum(predicted_mean*1.)*100:,.2f}%]          
 
     Posterior tail-area probability p: {tail_area_prob:.5f}
     Posterior probability of a causal effect: {causal_effect_prob:.2%}
