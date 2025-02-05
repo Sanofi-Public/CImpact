@@ -85,7 +85,7 @@ import pandas as pd
 from cimpact import CausalImpactAnalysis
 
 # Load your data
-data = pd.read_csv('https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/google_data.csv')
+data = pd.read_csv('https://raw.githubusercontent.com/Sanofi-Public/CImpact/master/examples/google_data.csv')
 
 # Define the configuration for the model
 model_config = {
@@ -122,7 +122,7 @@ print(result)
 
 ##### Outcome
 
-![Result visualization for Tensorflow model](https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/results/pyro_google_data_results.png "Result visualization for Tensorflow model")
+![Result visualization for Tensorflow model](https://github.com/Sanofi-Public/CImpact/blob/master/examples/results/pyro_google_data_results.png "Result visualization for Tensorflow model")
 
 Posterior inference {CIMpact}
 
@@ -148,7 +148,7 @@ import pandas as pd
 from cimpact import CausalImpactAnalysis
 
 # Load your data
-data = pd.read_csv('https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/google_data.csv')
+data = pd.read_csv('https://raw.githubusercontent.com/Sanofi-Public/CImpact/master/examples/google_data.csv')
 
 # Define the configuration for the model
 model_config = {
@@ -185,7 +185,7 @@ print(result)
 
 ##### Outcome
 
-![Result visualization for Tensorflow model](https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/results/prophet_google_data_results.png "Result visualization for Tensorflow model")
+![Result visualization for Tensorflow model](https://github.com/Sanofi-Public/CImpact/blob/master/examples/results/prophet_google_data_results.png "Result visualization for Tensorflow model")
 
 Posterior inference {CIMpact}
 
