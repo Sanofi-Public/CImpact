@@ -4,11 +4,10 @@
 [![Prophet](https://img.shields.io/badge/Prophet-1.x-blueviolet.svg)](https://facebook.github.io/prophet/)
 [![Pyro](https://img.shields.io/badge/Pyro-1.x-brightgreen.svg)](https://pyro.ai/)
 
-<img src="https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/assets/logo.png" width=70% height=40%>
+<img src="https://github.com/Sanofi-Public/CImpact/blob/master/assets/logo.png" width=70% height=40%>
 
 CImpact - Causal Inference for Measuring Performance and Causal Trends
 ======================================================================
-
 
 
 [](LICENSE)
@@ -35,8 +34,16 @@ Table of Contents
 ## Introduction
 ------------
 
-CImpact is designed to help analysts and data scientists assess the impact of an intervention on time series data. By leveraging different statistical models, CImpact aims to provide robust causal inference results, accommodating various use cases and preferences in model selection.
+CImpact is a versatile Python library designed to empower analysts and data scientists to evaluate the causal impact of interventions on time series data. By integrating a suite of statistical and probabilistic models, CImpact offers robust and flexible tools for causal inference, ensuring adaptability across diverse use cases and modeling preferences.
 
+With support for multiple cutting-edge frameworks, including TensorFlow Probability, Pyro, and Prophet, CImpact enables users to:
+
+Quantify Intervention Effects: Measure the influence of interventions with confidence intervals and probabilistic predictions.
+Leverage Advanced Models: Utilize models that capture trends, seasonality, and covariates, providing deeper insights into time series dynamics.
+Customize Approaches: Select between Hamiltonian Monte Carlo (HMC), Variational Inference (VI), or Prophet-based methods to match computational and analytical needs.
+Seamlessly Handle Covariates: Account for external variables that impact the time series through regression components or regressors.
+
+Whether your data exhibits complex seasonality, local trends, or requires the incorporation of contextual variables, CImpact equips you with a powerful toolkit to make informed decisions supported by rigorous statistical analysis.
 
 ## Why CImpact?
 ------------
@@ -46,18 +53,40 @@ CImpact extends the functionalities of the [tfcausalimpact](https://github.com/W
 ## Features
 --------
 
--   **Support for Multiple Models**: Utilize TensorFlow, Prophet, or Pyro models according to your needs.
--   **Modular Design**: Easily extend the library with new models due to its adapter-based architecture.
--   **Flexible Configuration**: Customize model settings and hyperparameters to suit specific analysis requirements.
--   **Comprehensive Evaluation**: Integrated methods for assessing model performance and the causal impact of interventions.
--   **Enhanced Visualization**: Generate insightful plots for better interpretation of results.
+- **Support for Advanced Models**  
+  Leverage state-of-the-art statistical models for causal impact analysis, including:  
+  - **TensorFlow Probability**: Bayesian Structural Time Series (BSTS) models with support for trend, seasonality, and regression components.  
+  - **Prophet**: Time series forecasting with robust handling of seasonality, missing data, and external regressors.  
+  - **Pyro**: Bayesian regression using Variational Inference (VI) or Hamiltonian Monte Carlo (HMC) for probabilistic modeling and uncertainty quantification.  
+
+- **Adapter-Based Modular Design**  
+  Easily extend the library by integrating custom models. The adapter-based architecture allows seamless addition of new frameworks.  
+
+- **Highly Configurable**  
+  Fine-tune model parameters, specify covariates, and select fitting methods (e.g., HMC, VI) to tailor analyses to specific needs.  
+
+- **Rigorous Evaluation**  
+  Includes tools for pre- and post-intervention analysis, model performance assessment, and confidence interval computation for causal inference.  
+
+- **Powerful Visualization**  
+  Generate insightful visualizations, including forecasts, confidence intervals, and intervention effects, to better interpret and communicate results.  
+
+## Use Cases & Examples
+--------
+
+CImpact is versatile and can be applied to various domains to measure the causal impact of interventions. Here are some examples:
+
+- **Marketing Campaigns**: Assess the impact of a marketing campaign on sales over time using time series data.
+- **Healthcare**: Evaluate the effect of a new drug or treatment on patient outcomes over a period.
+- **Economic Policy**: Measure the impact of a new economic policy or regulatory change on key economic indicators.
+
+Explore the `examples/` directory in this repository for further use case examples and code templates.
 
 ## Code Structure
 ------------
 
 ```plaintext
 CImpact/
-├── .checkmarx/scan_results       # Contains results from code scanning for security and quality issues
 ├── .github/                      # GitHub configuration files for workflows and actions
 ├── assets/                       # Stores media assets, such as the project logo, used in the README or documentation
 ├── examples/                     # Example scripts showcasing usage of the library and sample data for testing
@@ -100,8 +129,8 @@ To access the latest features or contribute to development, you can manually ins
 Clone the CImpact repository to your local machine:
 
 ```bash
-git clone https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference.git
-cd oneai-com-turing-causal_inference
+git clone https://github.com/Sanofi-Public/CImpact.git
+cd CImpact
 ```
 
 **Step 2: Install Dependencies** 
@@ -132,7 +161,6 @@ pip install dist/cimpact-<version>.whl
 
 Replace `<version>` with the version number of the generated `.whl` file. This will install the cimpact library in your environment and now you can use it using the following steps. 
 
-
 ## Getting Started
 ---------------
 
@@ -146,7 +174,7 @@ import pandas as pd
 from cimpact import CausalImpactAnalysis
 
 # Load your data
-data = pd.read_csv('https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/google_data.csv')
+data = pd.read_csv('https://raw.githubusercontent.com/Sanofi-Public/CImpact/master/examples/google_data.csv')
 
 # Define the configuration for the model
 model_config = {
@@ -173,7 +201,7 @@ predicted_color = "#7A00E6"        # Sanofi purple for predicted
 ci_color = "#D9B3FF66"             # Light lavender with transparency for CI
 intervention_color = "#444444"     # Dark gray for intervention
 figsize = (10,7)
-ci = 95                            # Confidence interval
+ci = 95                            # Desired confidence interval
 
 # Run the analysis
 analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col, observed_color,  predicted_color, ci_color, intervention_color, ci)
@@ -184,7 +212,7 @@ print(result)
 
 ##### Outcome
 
-![Result visualization for Tensorflow model](https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference/blob/main/examples/results/tensorflow_google_data_results.png "Result visualization for Tensorflow model")
+![Result visualization for Tensorflow model](https://github.com/Sanofi-Public/CImpact/blob/master/examples/results/tensorflow_google_data_results.png "Result visualization for Tensorflow model")
 
 Posterior inference {CIMpact}
 
@@ -207,20 +235,45 @@ Posterior inference {CIMpact}
 ## Evaluation Methods
 ------------------
 
-CImpact includes comprehensive evaluation methods to assess model performance and the causal impact of interventions:
+CImpact offers comprehensive tools to evaluate model performance and quantify the causal impact of interventions:  
 
--   **Summary Statistics**: Provides point estimates and confidence intervals for the estimated impact.
--   **Visualization**: Plots observed data, counterfactual predictions, and estimated impact over time.
--   **Diagnostics**: Offers residual analysis and model diagnostics to assess fit.
+- **Summary Statistics**  
+  Obtain detailed point estimates, confidence intervals, and probabilistic measures of the intervention's impact.  
+
+- **Impact Visualization**  
+  Generate intuitive plots that display:  
+  - Observed data versus counterfactual predictions.  
+  - Estimated impact over time, including uncertainty intervals.  
+
+- **Model Diagnostics**  
+  Conduct residual analysis and access diagnostic metrics to evaluate model fit and robustness.  
 
 ## Performance Comparison
 ----------------------
 
-Our performance comparisons highlight:
+CImpact supports a variety of models, each with unique strengths:  
 
--   **TensorFlow**: Robust performance with flexibility for advanced inference methods like variational inference and HMC.
--   **Prophet**: User-friendly with built-in seasonality and holiday effects; may be slower with large datasets.
--   **Pyro**: Strong Bayesian inference capabilities; may require more computational resources.
+- **TensorFlow**  
+  Delivers robust performance with flexibility for advanced inference techniques, such as Variational Inference (VI) and Hamiltonian Monte Carlo (HMC).  
+
+- **Prophet**  
+  Offers a user-friendly experience with built-in support for seasonality and holiday effects. While effective for many use cases, it may exhibit slower performance on larger datasets.  
+
+- **Pyro**  
+  Excels in Bayesian inference, enabling powerful probabilistic modeling. However, its computational demands can be higher compared to other models.  
+
+## Model Comparison & Best Practices
+----------------------
+
+Each model in CImpact has unique advantages, and selecting the right model can significantly impact your results. Here are some recommendations for selecting a model based on your use case:
+
+- **Prophet**: Best for time series data with clear seasonal patterns and holidays, and if interpretability and ease of use are a priority. However, it might struggle with very large datasets or complex causal relationships.
+  
+- **TensorFlow (Bayesian Structural Time Series)**: Ideal for users who need advanced Bayesian modeling and have computational resources for methods like HMC and VI. It works well for more complex time series data with multiple covariates and non-linearities.
+
+- **Pyro**: Choose this model if you need a fully probabilistic approach for causal inference. It's perfect for those who need flexibility with custom priors and Bayesian inference but are comfortable with Pyro's steeper learning curve.
+
+Make sure to benchmark each model using your data before committing to one, and consider running a few trials with different models to compare their performance.
 
 ## Future Plans
 ------------
@@ -236,10 +289,21 @@ We welcome contributions to enhance and refine the library. While we are particu
 
 Contributions are welcome! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on how to participate.
 
+## Contributors
+-------
+
+We would like to acknowledge the following individuals for their contributions to the development of this open-source library:
+
+- **Amin Kamaleddin**
+- **Diplumar Patel**
+- **Charles Girard**
+- **Nitesh Soni**
+
 ## License
 -------
 
 This work is available for academic research and non-commercial use only. See the <LICENSE> file for details.
+CImpact is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute it with attribution.
 
 ## Acknowledgements
 ----------------

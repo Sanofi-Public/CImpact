@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cimpact"
-version = "0.1.9"
+version = "1.0.1"
 authors = [
   { name="sanofi", email="" },
 ]
@@ -37,5 +37,5 @@ classifiers = [
 
 
 [project.urls]
-"Homepage" = "https://github.com/Sanofi-OneAI/oneai-com-turing-causal_inference"
+"Homepage" = "https://github.com/Sanofi-Public/CImpact"
 "Bug Tracker" = ""
