@@ -289,16 +289,6 @@ We welcome contributions to enhance and refine the library. While we are particu
 
 Contributions are welcome! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on how to participate.
 
-## Contributors
--------
-
-We would like to acknowledge the following individuals for their contributions to the development of this open-source library:
-
-- **Amin Kamaleddin**
-- **Diplumar Patel**
-- **Charles Girard**
-- **Nitesh Soni**
-
 ## License
 -------
 
