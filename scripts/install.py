@@ -7,6 +7,7 @@ def generate_docs():
 
 
 def main():
+    # edit_config_file()  #TODO: COmment by Dip (just this line)
     generate_docs()
 
 

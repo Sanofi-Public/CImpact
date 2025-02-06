@@ -201,9 +201,10 @@ predicted_color = "#7A00E6"        # Sanofi purple for predicted
 ci_color = "#D9B3FF66"             # Light lavender with transparency for CI
 intervention_color = "#444444"     # Dark gray for intervention
 figsize = (10,7)
+ci = 95                            # Desired confidence interval
 
 # Run the analysis
-analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col, observed_color,  predicted_color, ci_color, intervention_color)
+analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col, observed_color,  predicted_color, ci_color, intervention_color, ci)
 result = analysis.run_analysis()
 print(result)
 ```
@@ -287,16 +288,6 @@ We welcome contributions to enhance and refine the library. While we are particu
 ------------
 
 Contributions are welcome! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on how to participate.
-
-## Contributors
--------
-
-We would like to acknowledge the following individuals for their contributions to the development of this open-source library:
-
-- **Amin Kamaleddin**
-- **Diplumar Patel**
-- **Charles Girard**
-- **Nitesh Soni**
 
 ## License
 -------
