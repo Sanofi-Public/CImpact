@@ -110,7 +110,7 @@ CImpact/
 
 CImpact can be installed using one of the following methods:
 
-### 1. Stable Release (Coming Soon)
+### 1. Stable Release
 
 The stable release of CImpact will soon be available on PyPI. Once published, you can install it with:
 
