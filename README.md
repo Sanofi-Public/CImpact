@@ -230,7 +230,7 @@ Posterior inference {CIMpact}
 
 
 > [!NOTE]  
-> Please refer to `examples/how-to-use.md` for detailed model configuration instructions and additional usage examples of the library.
+> Please refer to [`examples/how-to-use.md`](./examples/how-to-use.md) for detailed model configuration instructions and additional usage examples of the library.
 
 ## Evaluation Methods
 ------------------
