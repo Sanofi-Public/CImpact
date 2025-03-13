@@ -1,0 +1,32 @@
+name: testing
+on:
+  pull_request:
+    branches:
+      - main
+      - staging
+  push:
+    branches:
+      - main
+      - staging
+permissions:
+  contents: 'read'
+  id-token: 'write'
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -r requirements.txt
+      - run: python -m build
+      - run: pip install --upgrade --force-reinstall dist/cimpact*.whl
+      - run: python -m unittest -v
+
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - run: pip install -r requirements.txt
+  #     - name: Build Wheel
+  #       if: ${{ github.event_name == 'pull_request' || (github.ref == 'refs/heads/main' && github.event_name == 'push') }}
+  #       run: python -m build
