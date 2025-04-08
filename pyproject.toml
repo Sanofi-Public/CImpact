@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cimpact"
-version = "1.0.1"
+version = "1.0.2"
 authors = [
   { name="sanofi", email="" },
 ]
@@ -12,12 +12,12 @@ description = "CImpact helps identifying causal impact in timeseries data"
 keywords =  ["causal" , "inference", "timeseries"]
 readme = "README.md"
 license = {file = "LICENSE.txt"}
-requires-python = ">=3.7"
+requires-python = ">=3.7, <3.11"
 dependencies = ["numpy>=1.19.2",
  "pandas>=1.1.59",
   "matplotlib>=3.3.2",
-  "tensorflow >= 2.10",
-  "tensorflow-probability[tf] >= 0.18, <= 0.24",
+  "tensorflow >= 2.10, <2.15",
+  "tensorflow-probability[tf] >= 0.18, <= 0.19",
   "jinja2",
   "prophet>=1.0",
   "pyro-ppl>=1.6.0",
