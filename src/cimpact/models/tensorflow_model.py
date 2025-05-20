@@ -107,13 +107,14 @@ class TensorFlowModel(BaseModel):
 
         optimizer = tf.optimizers.Adam(learning_rate)
         self.variational_posteriors = tfp.sts.build_factored_surrogate_posterior(
-            model=self.model
+            model=self.model,
+            name="variational_posterior"
         )
 
         @tf.function
         def _run_vi():
             elbo_loss_curve = tfp.vi.fit_surrogate_posterior(
-                target_log_prob_fn=self.model.joint_log_prob(observed_time_series),
+                target_log_prob_fn=self.model.joint_distribution(observed_time_series).log_prob,
                 surrogate_posterior=self.variational_posteriors,
                 optimizer=optimizer,
                 num_steps=num_variational_steps,

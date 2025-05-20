@@ -128,6 +128,8 @@ class CausalImpactAnalysis:
         self.intervention_color = intervention_color
         self.figsize = figsize
         self.ci = ci
+        self.rmse = None
+        self.mape= None
 
 
     def calculate_zscore(self):
@@ -177,6 +179,9 @@ class CausalImpactAnalysis:
         if post_pred is None or pre_pred is None or combined_predictions is None:
             raise ValueError("Prediction failed.")
         
+        # Calculate evaluation metrics
+        self.rmse, self.mape = self.model.evaluate()
+        
         self.zscore = self.calculate_zscore()
         self.model.postprocess_results(post_pred, pre_pred, combined_predictions, self.zscore)
         summary = self.generate_summary(post_pred, forecast_dist)
@@ -189,7 +194,7 @@ class CausalImpactAnalysis:
                     figsize=self.figsize,
                     zscore = self.zscore
                 )
-        return summary, plot
+        return summary #, plot
 
     def preprocess(self):
         """
@@ -253,7 +258,10 @@ class CausalImpactAnalysis:
 
     Posterior tail-area probability p: {tail_area_prob:.5f}
     Posterior probability of a causal effect: {causal_effect_prob:.2%}
-
+    
+    Model Performance Metrics:
+    RMSE: {self.rmse:.2f}
+    MAPE: {self.mape:.2f}%
     """
 
         return summary
