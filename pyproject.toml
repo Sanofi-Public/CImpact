@@ -12,12 +12,12 @@ description = "CImpact helps identifying causal impact in timeseries data"
 keywords =  ["causal" , "inference", "timeseries"]
 readme = "README.md"
 license = {file = "LICENSE.txt"}
-requires-python = ">=3.7, <3.11"
+requires-python = ">=3.7, <3.13"
 dependencies = ["numpy>=1.19.2",
- "pandas>=1.1.59",
+ "pandas>=1.1.5",
   "matplotlib>=3.3.2",
-  "tensorflow >= 2.10, <2.15",
-  "tensorflow-probability[tf] >= 0.18, <= 0.19",
+  "tensorflow >= 2.10",
+  "tensorflow-probability[tf] >= 0.18, <= 0.24",
   "jinja2",
   "prophet>=1.0",
   "pyro-ppl>=1.6.0",
@@ -32,6 +32,12 @@ dependencies = ["numpy>=1.19.2",
   "hatchling"]
 classifiers = [
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8", 
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "License :: Other/Proprietary License",
     "Operating System :: OS Independent",
 ]
