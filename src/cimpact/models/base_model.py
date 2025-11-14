@@ -54,13 +54,42 @@ class BaseModel(ABC):
 
     def evaluate(self):
         """
-        Evaluate the model performance using Root Mean Squared Error (RMSE).
+        Evaluate the model performance using Root Mean Squared Error (RMSE) and 
+        Mean Absolute Percentage Error (MAPE).
 
         Returns:
-        - float: RMSE value.
+        - tuple: (RMSE value, MAPE value)
         """
-        predictions, _, _, _ = self.predict() #pylint: disable=too-many-locals
-        return np.sqrt(np.mean((self.data[self.target_col].values - predictions) ** 2))
+        post_pred, pre_pred, combined_predictions, _ = self.predict() #pylint: disable=too-many-locals
+        
+        # We'll evaluate on the post-intervention period
+        actual_post = self.post_data[self.target_col].values
+        
+        # Ensure post_pred is the right shape
+        if hasattr(post_pred, 'shape') and len(post_pred.shape) > 1:
+            post_pred = post_pred.flatten()
+            
+        # Check if lengths match
+        if len(actual_post) != len(post_pred):
+            # If not, we'll use the combined predictions for the post period
+            if combined_predictions is not None:
+                post_start_idx = self.post_period[0] - self.pre_period[0]
+                post_end_idx = post_start_idx + len(actual_post)
+                post_pred = combined_predictions[post_start_idx:post_end_idx]
+        
+        # Calculate RMSE
+        rmse = np.sqrt(np.mean((actual_post - post_pred) ** 2))
+        
+        # Calculate MAPE
+        mape_values = []
+        for act, pred in zip(actual_post, post_pred):
+            if act != 0:  # Avoid division by zero
+                mape_values.append(abs((act - pred) / act) * 100)
+        
+        # If all values were zero, set MAPE to NaN, otherwise calculate the mean
+        mape = np.nan if len(mape_values) == 0 else np.mean(mape_values)
+        
+        return rmse, mape
 
 
     def plot(
@@ -141,11 +170,17 @@ class BaseModel(ABC):
             elif panel == "cumulative":
                 point_effects_post = self.post_data[self.target_col].values - predicted_means[-len(self.post_data):]
                 cumulative_effects = np.cumsum(point_effects_post)
+                
+                # Calculate cumulative uncertainty with time correlation
+                n_points = len(point_effects_post)
+                time_correlation = np.minimum(np.arange(n_points) / n_points, 1)
+                cumulative_std = np.std(point_effects_post) * np.sqrt(np.arange(1, n_points + 1)) * (1 + time_correlation)
+                
                 ax.plot(self.post_data.index, cumulative_effects, linestyle="--", color=predicted_color, label="Cumulative Effects")
                 ax.fill_between(
                     self.post_data.index,
-                    cumulative_effects - zscore * np.std(cumulative_effects),
-                    cumulative_effects + zscore * np.std(cumulative_effects), 
+                    cumulative_effects - zscore * cumulative_std,
+                    cumulative_effects + zscore * cumulative_std, 
                     color=ci_color,
                 )
                 ax.axhline(y=0, color="xkcd:light grey", linestyle="--")
