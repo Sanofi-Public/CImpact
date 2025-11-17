@@ -4,6 +4,7 @@ Prophet model for causal impact measurement
 
 from prophet import Prophet
 import numpy as np
+import inspect
 from cimpact.models.base_model import BaseModel
 
 
@@ -38,7 +39,19 @@ class ProphetModel(BaseModel):
         df_train = self.data.reset_index().rename(
             columns={self.index_col: "ds", self.target_col: "y"}
         )
-        self.model = Prophet()
+        
+        # Get Prophet's accepted parameters from its __init__ signature
+        prophet_signature = inspect.signature(Prophet.__init__)
+        valid_prophet_params = set(prophet_signature.parameters.keys()) - {'self'}
+        
+        # Filter model_args to only include valid Prophet parameters
+        prophet_kwargs = {}
+        if self.model_args:
+            for key, value in self.model_args.items():
+                if key in valid_prophet_params:
+                    prophet_kwargs[key] = value
+        
+        self.model = Prophet(**prophet_kwargs)
         for cov in self.covariates.columns:
             self.model.add_regressor(cov)
         pre_train = df_train.iloc[: self.pre_period[1] + 1]

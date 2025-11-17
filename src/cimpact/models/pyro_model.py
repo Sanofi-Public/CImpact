@@ -3,6 +3,7 @@ Pyro model for causal impact measurement
 """
 
 import numpy as np
+import inspect
 import pyro
 import pyro.distributions as dist
 import torch
@@ -83,7 +84,25 @@ class PyroModel(BaseModel):
         )
         self.covariates = covariates
         self.model = BayesianRegressionModel(input_dim=self.covariates.shape[1])
-        self.optimizer = optim.Adam({"lr": self.model_args.get("learning_rate", 0.01)})
+        
+        # Generic optimizer parameter extraction
+        # Adam optimizer accepts a dict with 'lr' (learning_rate) and other optimizer-specific params
+        optimizer_kwargs = {}
+        if self.model_args:
+            # Map learning_rate to lr for Adam optimizer
+            if 'learning_rate' in self.model_args:
+                optimizer_kwargs['lr'] = self.model_args['learning_rate']
+            # Check for other optimizer parameters (Adam accepts lr, betas, eps, weight_decay, etc.)
+            # We'll use learning_rate as the primary parameter, but allow others
+            for key in ['betas', 'eps', 'weight_decay', 'amsgrad']:
+                if key in self.model_args:
+                    optimizer_kwargs[key] = self.model_args[key]
+        
+        # Default learning rate if not provided
+        if 'lr' not in optimizer_kwargs:
+            optimizer_kwargs['lr'] = 0.01
+            
+        self.optimizer = optim.Adam(optimizer_kwargs)
         self.svi = SVI(
             self.model.model, self.model.guide, self.optimizer, loss=Trace_ELBO()
         )
@@ -121,8 +140,25 @@ class PyroModel(BaseModel):
         covariates = torch.tensor(
             self.data[self.covariates.columns].values, dtype=torch.float
         )
+        
+        # Generic Predictive parameter extraction
+        predictive_kwargs = {}
+        if self.model_args:
+            # Get Predictive's accepted parameters
+            predictive_signature = inspect.signature(Predictive.__init__)
+            valid_predictive_params = set(predictive_signature.parameters.keys()) - {'self', 'model', 'guide'}
+            
+            # Filter model_args to only include valid Predictive parameters
+            for key, value in self.model_args.items():
+                if key in valid_predictive_params:
+                    predictive_kwargs[key] = value
+        
+        # Default num_samples if not provided
+        if 'num_samples' not in predictive_kwargs:
+            predictive_kwargs['num_samples'] = 1000
+            
         predictive = Predictive(
-            self.model.model, guide=self.model.guide, num_samples=1000
+            self.model.model, guide=self.model.guide, **predictive_kwargs
         )
         samples = predictive(covariates)
 
