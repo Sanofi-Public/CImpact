@@ -124,6 +124,21 @@ def compute_p_value(
     Returns:
     - float: tail area probability and causal effect probability.
     """
+    # Convert torch tensors to numpy arrays
+    try:
+        import torch
+        if isinstance(simulated_ys, torch.Tensor):
+            simulated_ys = simulated_ys.detach().cpu().numpy()
+    except ImportError:
+        pass
+    
+    # Convert TensorFlow tensors to numpy arrays
+    if hasattr(simulated_ys, 'numpy'):
+        try:
+            simulated_ys = simulated_ys.numpy()
+        except:
+            pass
+    
     # Ensure the tensor has at least 2 dimensions
     if len(simulated_ys.shape) == 1:
         simulated_ys = np.expand_dims(simulated_ys, axis=-1)

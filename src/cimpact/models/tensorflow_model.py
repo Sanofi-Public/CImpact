@@ -3,6 +3,7 @@ Module for TensorFlow-based Bayesian Structural Time Series model implementation
 """
 
 import numpy as np
+import inspect
 import tensorflow as tf
 import tensorflow_probability as tfp
 from cimpact.models.base_model import BaseModel
@@ -89,11 +90,26 @@ class TensorFlowModel(BaseModel):
         """
         Fit the model using Hamiltonian Monte Carlo (HMC).
         """
-        num_results = self.model_args.get("num_results", 100)
+        # Generic fit_with_hmc parameter extraction
+        hmc_kwargs = {}
+        if self.model_args:
+            # Get fit_with_hmc's accepted parameters
+            hmc_signature = inspect.signature(tfp.sts.fit_with_hmc)
+            valid_hmc_params = set(hmc_signature.parameters.keys()) - {'self', 'model', 'observed_time_series'}
+            
+            # Filter model_args to only include valid HMC parameters
+            for key, value in self.model_args.items():
+                if key in valid_hmc_params:
+                    hmc_kwargs[key] = value
+        
+        # Default num_results if not provided
+        if 'num_results' not in hmc_kwargs:
+            hmc_kwargs['num_results'] = 100
+            
         samples, kernel_results = tfp.sts.fit_with_hmc(
             model=self.model,
             observed_time_series=observed_time_series,
-            num_results=num_results,
+            **hmc_kwargs
         )
         return samples, kernel_results
 
@@ -102,10 +118,26 @@ class TensorFlowModel(BaseModel):
         """
         Fit the model using Variational Inference (VI).
         """
-        learning_rate = self.model_args.get("learning_rate", 0.1)
-        num_variational_steps = self.model_args.get("num_variational_steps", 200)
-
-        optimizer = tf.optimizers.Adam(learning_rate)
+        # Generic optimizer parameter extraction
+        optimizer_kwargs = {}
+        if self.model_args:
+            # Get Adam optimizer's accepted parameters
+            adam_signature = inspect.signature(tf.optimizers.Adam.__init__)
+            valid_adam_params = set(adam_signature.parameters.keys()) - {'self', 'name'}
+            
+            # Filter model_args to only include valid Adam parameters
+            for key, value in self.model_args.items():
+                if key in valid_adam_params:
+                    optimizer_kwargs[key] = value
+        
+        # Default learning_rate if not provided
+        if 'learning_rate' not in optimizer_kwargs:
+            optimizer_kwargs['learning_rate'] = 0.1
+            
+        optimizer = tf.optimizers.Adam(**optimizer_kwargs)
+        
+        # Get num_variational_steps (custom parameter, not from optimizer)
+        num_variational_steps = self.model_args.get("num_variational_steps", 200) if self.model_args else 200
         self.variational_posteriors = tfp.sts.build_factored_surrogate_posterior(
             model=self.model,
             name="variational_posterior"

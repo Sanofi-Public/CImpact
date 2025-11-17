@@ -112,13 +112,9 @@ CImpact can be installed using one of the following methods:
 
 ### 1. Stable Release
 
-The stable release of CImpact will soon be available on PyPI. Once published, you can install it with:
-
 ```bash
 pip install cimpact
 ```
-
-Stay tuned for updates on the stable release!
 
 ### 2. Latest Release (Manual Installation)
 
@@ -166,7 +162,7 @@ Replace `<version>` with the version number of the generated `.whl` file. This w
 
 ### Example Usage
 
-#### Tensowflow model
+#### TensorFlow model
 
 ```python
 
@@ -181,8 +177,8 @@ model_config = {
     'model_type': 'tensorflow',  # Options: 'tensorflow', 'prophet', 'pyro'
     'model_args': {
         'standardize': True,
-        'learning_rate': 0.01,
-        'num_variational_steps': 1000,
+        'learning_rate': 0.1,
+        'num_variational_steps': 200,
         'fit_method': 'vi'
     }
 }
@@ -204,7 +200,7 @@ figsize = (10,7)
 ci = 95                            # Desired confidence interval
 
 # Run the analysis
-analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col, observed_color,  predicted_color, ci_color, intervention_color, ci)
+analysis = CausalImpactAnalysis(data, pre_period, post_period, model_config, index_col, target_col, observed_color,  predicted_color, ci_color, intervention_color, figsize, ci)
 result = analysis.run_analysis()
 print(result)
 ```
@@ -214,19 +210,27 @@ print(result)
 
 ![Result visualization for Tensorflow model](https://github.com/Sanofi-Public/CImpact/blob/master/examples/results/tensorflow_google_data_results.png "Result visualization for Tensorflow model")
 
-Posterior inference {CIMpact}
+Summary results:
 
-|                                       | Average          | Cumulative       |
-|---------------------------------------|------------------|------------------|
-| **Actual**                            | 145             | 2,614           |
-| **Prediction (s.d.)**                 | 180 (10)        | 3,237 (10)      |
-| **95% CI**                            | [144, 218]      | [2,880, 3,594]  |
-| **Absolute effect (s.d.)**            | -35 (15)        | -623 (15)       |
-| **95% CI**                            | [-61, -11]      | [-980, -266]    |
-| **Relative effect (s.d.)**            | -19.08% (7.58%) | -19.08% (7.58%) |
-| **95% CI**                            | [-32.42%, -6.66%] | [-32.42%, -6.66%] |
-| **Posterior tail-area probability p:** | 0.15842        |                  |
-| **Posterior probability of a causal effect:** | 84.16%      |                  |
+    Posterior inference {CausalImpact}
+
+                            Average          Cumulative
+    Actual                  145              2,614
+    Prediction (s.d.)       180 (std 10)     3,237 (10)
+    95% CI                  [144, 218]       [144, 218]
+
+    Absolute effect (s.d.)  -35 (std 15)     -623 (std 15)
+    95% CI                  [-61, -11]       [-980, -266]
+
+    Relative effect (s.d.)  -19.08% (std 7.58%)   -19.08% (std 7.58%)
+    95% CI                  [-32.42%, -6.66%]     [-32.42%, -6.66%]
+
+    Posterior tail-area probability p: 0.15842
+    Posterior probability of a causal effect: 84.16%
+    
+    Model Performance Metrics:
+    RMSE: 15.23
+    MAPE: 10.45%
 
 
 > [!NOTE]  
