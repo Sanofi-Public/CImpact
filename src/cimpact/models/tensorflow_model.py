@@ -29,21 +29,37 @@ class TensorFlowModel(BaseModel):
         super().__init__(
             data, pre_period, post_period, index_col, target_col, model_args
         )
+        self.np_dtype = np.dtype(tf.keras.backend.floatx())
         self.pre_data = None
         self.post_data = None
         self.variational_posteriors = None
 
-        self.covariates = covariates
+        self.data = self._ensure_float_dtype(self.data)
+        self.covariates = self._ensure_float_dtype(covariates)
         self.model = self.build_model()
         self.samples = None
         self.inferences = None
+
+    def _ensure_float_dtype(self, df):
+        """Cast numeric columns to the model's floating dtype."""
+        if df is None:
+            return df
+        df = df.copy()
+        numeric_cols = df.select_dtypes(include=[np.number]).columns
+        if len(numeric_cols) > 0:
+            df[numeric_cols] = df[numeric_cols].astype(self.np_dtype)
+        return df
 
     def build_model(self):
         """
         Build the Bayesian Structural Time Series model.
         """
-        observed_time_series = self.data[self.target_col][: self.pre_period[1] + 1]
-        design_matrix = self.covariates[: self.pre_period[1] + 1].values
+        observed_time_series = self.data[self.target_col][
+            : self.pre_period[1] + 1
+        ].to_numpy(dtype=self.np_dtype)
+        design_matrix = self.covariates[: self.pre_period[1] + 1].to_numpy(
+            dtype=self.np_dtype
+        )
 
         local_level = tfp.sts.LocalLinearTrend(
             observed_time_series=observed_time_series
@@ -64,18 +80,18 @@ class TensorFlowModel(BaseModel):
         Fit the TensorFlow model using the pre-intervention data.
         """
         data, pre_data, post_data = self.preprocess_data()
-        self.data = data
-        self.pre_data = pre_data
-        self.post_data = post_data
-        self.model = self.initialize_model(pre_data[self.target_col])
+        self.data = self._ensure_float_dtype(data)
+        self.pre_data = self._ensure_float_dtype(pre_data)
+        self.post_data = self._ensure_float_dtype(post_data)
+        self.model = self.initialize_model(self.pre_data[self.target_col])
         fit_method = self.model_args.get("fit_method", "vi")
 
         try:
             if fit_method == "hmc":
-                self.samples, _ = self.fit_with_hmc(pre_data[self.target_col])
+                self.samples, _ = self.fit_with_hmc(self.pre_data[self.target_col])
             elif fit_method == "vi":
                 self.samples, elbo_loss_curve = self.fit_with_vi(
-                    pre_data[self.target_col]
+                    self.pre_data[self.target_col]
                 )
             else:
                 raise ValueError(f"Unsupported fit method: {fit_method}")
@@ -90,6 +106,7 @@ class TensorFlowModel(BaseModel):
         """
         Fit the model using Hamiltonian Monte Carlo (HMC).
         """
+        observed_time_series = np.asarray(observed_time_series, dtype=self.np_dtype)
         # Generic fit_with_hmc parameter extraction
         hmc_kwargs = {}
         if self.model_args:
@@ -118,6 +135,7 @@ class TensorFlowModel(BaseModel):
         """
         Fit the model using Variational Inference (VI).
         """
+        observed_time_series = np.asarray(observed_time_series, dtype=self.np_dtype)
         # Generic optimizer parameter extraction
         optimizer_kwargs = {}
         if self.model_args:
@@ -166,12 +184,14 @@ class TensorFlowModel(BaseModel):
         - combined_predictions (np.array): Combined predictions for the full period.
         - forecast_dist (tfp.distributions.Distribution): Forecast distribution.
         """
+        observed_series = self.data[self.target_col][
+            self.pre_period[0] : self.pre_period[1] + 1
+        ].to_numpy(dtype=self.np_dtype)
+        pre_observed = self.pre_data[self.target_col].to_numpy(dtype=self.np_dtype)
         if self.samples is not None:
             forecast_dist = tfp.sts.forecast(
                 model=self.model,
-                observed_time_series=self.data[self.target_col][
-                    self.pre_period[0]: self.pre_period[1] + 1
-                ],  # Use pre-period data
+                observed_time_series=observed_series,  # Use pre-period data
                 parameter_samples=self.samples,
                 num_steps_forecast=len(
                     self.post_data
@@ -180,7 +200,7 @@ class TensorFlowModel(BaseModel):
         else:
             forecast_dist = tfp.sts.forecast(
                 model=self.model,
-                observed_time_series=self.pre_data,
+                observed_time_series=pre_observed,
                 parameter_samples=self.variational_posteriors.sample(50),
                 num_steps_forecast=len(self.data)
                 - self.pre_period[1]
@@ -189,9 +209,7 @@ class TensorFlowModel(BaseModel):
 
         one_step_dist = tfp.sts.one_step_predictive(
             model=self.model,
-            observed_time_series=self.pre_data[
-                self.target_col
-            ],  # Only pre-intervention data
+            observed_time_series=pre_observed,
             parameter_samples=self.samples,
         )
 
@@ -213,23 +231,25 @@ class TensorFlowModel(BaseModel):
         """
         Initialize the Structural Time Series model components.
         """
+        observed_values = np.asarray(observed_time_series, dtype=self.np_dtype)
+
         local_level = tfp.sts.LocalLevel(
-            observed_time_series=observed_time_series, name="local_level"
+            observed_time_series=observed_values, name="local_level"
         )
         seasonal = tfp.sts.Seasonal(
-            num_seasons=12, observed_time_series=observed_time_series, name="seasonal"
+            num_seasons=12, observed_time_series=observed_values, name="seasonal"
         )
         trend = tfp.sts.LocalLinearTrend(
-            observed_time_series=observed_time_series, name="trend"
+            observed_time_series=observed_values, name="trend"
         )
 
-        design_matrix = self.covariates.values.astype(np.float64)
+        design_matrix = self.covariates.to_numpy(dtype=self.np_dtype)
         regression = tfp.sts.SparseLinearRegression(
             design_matrix=design_matrix, name="regression"
         )
 
         model = tfp.sts.Sum(
             [local_level, seasonal, trend, regression],
-            observed_time_series=observed_time_series,
+            observed_time_series=observed_values,
         )
         return model
