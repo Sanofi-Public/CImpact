@@ -1,0 +1,42 @@
+name: Dependency Audit
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  pip-audit:
+    name: Run pip-audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Upgrade pip and setuptools
+        run: |
+          python -m pip install --upgrade pip setuptools
+
+      - name: Install pip-audit
+        run: |
+          python -m pip install pip-audit
+
+      - name: Run pip-audit (fail on any vuln)
+        run: |
+          python -m pip_audit --format=txt --progress=off
+
+      - name: Run pip-audit (save JSON)
+        run: |
+          python -m pip_audit --format=json --progress=off > pip_audit_results.json
+
+      - name: Upload pip-audit results
+        uses: actions/upload-artifact@v4
+        with:
+          name: pip-audit-results
+          path: pip_audit_results.json

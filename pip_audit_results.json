@@ -1,0 +1,685 @@
+{
+  "dependencies": [
+    {
+      "name": "absl-py",
+      "version": "2.4.0",
+      "vulns": []
+    },
+    {
+      "name": "astunparse",
+      "version": "1.6.3",
+      "vulns": []
+    },
+    {
+      "name": "attrs",
+      "version": "26.1.0",
+      "vulns": []
+    },
+    {
+      "name": "backports-tarfile",
+      "version": "1.2.0",
+      "vulns": []
+    },
+    {
+      "name": "black",
+      "version": "26.5.1",
+      "vulns": []
+    },
+    {
+      "name": "boolean-py",
+      "version": "5.0",
+      "vulns": []
+    },
+    {
+      "name": "build",
+      "version": "1.5.0",
+      "vulns": []
+    },
+    {
+      "name": "cachecontrol",
+      "version": "0.14.4",
+      "vulns": []
+    },
+    {
+      "name": "certifi",
+      "version": "2026.6.17",
+      "vulns": []
+    },
+    {
+      "name": "charset-normalizer",
+      "version": "3.4.7",
+      "vulns": []
+    },
+    {
+      "name": "cimpact",
+      "version": "1.0.7",
+      "vulns": []
+    },
+    {
+      "name": "click",
+      "version": "8.4.1",
+      "vulns": []
+    },
+    {
+      "name": "cloudpickle",
+      "version": "3.1.2",
+      "vulns": []
+    },
+    {
+      "name": "cmdstanpy",
+      "version": "1.3.0",
+      "vulns": []
+    },
+    {
+      "name": "colorama",
+      "version": "0.4.6",
+      "vulns": []
+    },
+    {
+      "name": "contourpy",
+      "version": "1.3.3",
+      "vulns": []
+    },
+    {
+      "name": "coverage",
+      "version": "7.14.2",
+      "vulns": []
+    },
+    {
+      "name": "cycler",
+      "version": "0.12.1",
+      "vulns": []
+    },
+    {
+      "name": "cyclonedx-python-lib",
+      "version": "11.11.0",
+      "vulns": []
+    },
+    {
+      "name": "decorator",
+      "version": "5.3.1",
+      "vulns": []
+    },
+    {
+      "name": "defusedxml",
+      "version": "0.7.1",
+      "vulns": []
+    },
+    {
+      "name": "dm-tree",
+      "version": "0.1.10",
+      "vulns": []
+    },
+    {
+      "name": "docutils",
+      "version": "0.23",
+      "vulns": []
+    },
+    {
+      "name": "filelock",
+      "version": "3.29.4",
+      "vulns": []
+    },
+    {
+      "name": "flatbuffers",
+      "version": "25.12.19",
+      "vulns": []
+    },
+    {
+      "name": "fonttools",
+      "version": "4.63.0",
+      "vulns": []
+    },
+    {
+      "name": "fsspec",
+      "version": "2026.6.0",
+      "vulns": []
+    },
+    {
+      "name": "gast",
+      "version": "0.7.0",
+      "vulns": []
+    },
+    {
+      "name": "google-pasta",
+      "version": "0.2.0",
+      "vulns": []
+    },
+    {
+      "name": "grpcio",
+      "version": "1.81.1",
+      "vulns": []
+    },
+    {
+      "name": "h5py",
+      "version": "3.14.0",
+      "vulns": []
+    },
+    {
+      "name": "hatchling",
+      "version": "1.30.1",
+      "vulns": []
+    },
+    {
+      "name": "holidays",
+      "version": "0.99",
+      "vulns": []
+    },
+    {
+      "name": "id",
+      "version": "1.6.1",
+      "vulns": []
+    },
+    {
+      "name": "idna",
+      "version": "3.18",
+      "vulns": []
+    },
+    {
+      "name": "importlib-metadata",
+      "version": "9.0.0",
+      "vulns": []
+    },
+    {
+      "name": "importlib-resources",
+      "version": "7.1.0",
+      "vulns": []
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.0",
+      "vulns": []
+    },
+    {
+      "name": "jaraco-classes",
+      "version": "3.4.0",
+      "vulns": []
+    },
+    {
+      "name": "jaraco-context",
+      "version": "6.1.2",
+      "vulns": []
+    },
+    {
+      "name": "jaraco-functools",
+      "version": "4.5.0",
+      "vulns": []
+    },
+    {
+      "name": "jinja2",
+      "version": "3.1.6",
+      "vulns": []
+    },
+    {
+      "name": "keras",
+      "version": "3.14.1",
+      "vulns": []
+    },
+    {
+      "name": "keyring",
+      "version": "25.7.0",
+      "vulns": []
+    },
+    {
+      "name": "kiwisolver",
+      "version": "1.5.0",
+      "vulns": []
+    },
+    {
+      "name": "libclang",
+      "version": "18.1.1",
+      "vulns": []
+    },
+    {
+      "name": "license-expression",
+      "version": "30.4.4",
+      "vulns": []
+    },
+    {
+      "name": "markdown-it-py",
+      "version": "4.2.0",
+      "vulns": []
+    },
+    {
+      "name": "markupsafe",
+      "version": "3.0.3",
+      "vulns": []
+    },
+    {
+      "name": "matplotlib",
+      "version": "3.11.0",
+      "vulns": []
+    },
+    {
+      "name": "mdurl",
+      "version": "0.1.2",
+      "vulns": []
+    },
+    {
+      "name": "ml-dtypes",
+      "version": "0.5.4",
+      "vulns": []
+    },
+    {
+      "name": "more-itertools",
+      "version": "11.1.0",
+      "vulns": []
+    },
+    {
+      "name": "mpmath",
+      "version": "1.3.0",
+      "vulns": []
+    },
+    {
+      "name": "msgpack",
+      "version": "1.2.1",
+      "vulns": []
+    },
+    {
+      "name": "mypy-extensions",
+      "version": "1.1.0",
+      "vulns": []
+    },
+    {
+      "name": "namex",
+      "version": "0.1.0",
+      "vulns": []
+    },
+    {
+      "name": "networkx",
+      "version": "3.6.1",
+      "vulns": []
+    },
+    {
+      "name": "nh3",
+      "version": "0.3.6",
+      "vulns": []
+    },
+    {
+      "name": "numpy",
+      "version": "2.4.6",
+      "vulns": []
+    },
+    {
+      "name": "opt-einsum",
+      "version": "3.4.0",
+      "vulns": []
+    },
+    {
+      "name": "optree",
+      "version": "0.19.1",
+      "vulns": []
+    },
+    {
+      "name": "packageurl-python",
+      "version": "0.17.6",
+      "vulns": []
+    },
+    {
+      "name": "packaging",
+      "version": "26.2",
+      "vulns": []
+    },
+    {
+      "name": "pandas",
+      "version": "3.0.3",
+      "vulns": []
+    },
+    {
+      "name": "pathspec",
+      "version": "1.1.1",
+      "vulns": []
+    },
+    {
+      "name": "pillow",
+      "version": "12.2.0",
+      "vulns": []
+    },
+    {
+      "name": "pip",
+      "version": "24.0",
+      "vulns": [
+        {
+          "id": "PYSEC-2026-196",
+          "fix_versions": [
+            "26.1.2"
+          ],
+          "aliases": [
+            "CVE-2026-8643"
+          ],
+          "description": "pip would treat console_scripts and gui_scripts as paths instead of file names without sanitizing the resolved absolute path to the installation directory, leading to entry points being installed outside the installation directory."
+        },
+        {
+          "id": "CVE-2025-8869",
+          "fix_versions": [
+            "25.3"
+          ],
+          "aliases": [
+            "GHSA-4xh5-x5gv-qwph"
+          ],
+          "description": "When extracting a tar archive pip may not check symbolic links point into the extraction directory if the tarfile module doesn't implement PEP 706. Note that upgrading pip to a \"fixed\" version for this vulnerability doesn't fix all known vulnerabilities that are remediated by using a Python version that implements PEP 706. Note that this is a vulnerability in pip's fallback implementation of tar extraction for Python versions that don't implement PEP 706 and therefore are not secure to all vulnerabilities in the Python 'tarfile' module. If you're using a Python version that implements PEP 706 then pip doesn't use the \"vulnerable\" fallback code. Mitigations include upgrading to a version of pip that includes the fix, upgrading to a Python version that implements PEP 706 (Python >=3.9.17, >=3.10.12, >=3.11.4, or >=3.12), applying the linked patch, or inspecting source distributions (sdists) before installation as is already a best-practice."
+        },
+        {
+          "id": "CVE-2026-1703",
+          "fix_versions": [
+            "26.0"
+          ],
+          "aliases": [
+            "GHSA-6vgw-5pg2-w6jp"
+          ],
+          "description": "When pip is installing and extracting a maliciously crafted wheel archive, files may be extracted outside the installation directory. The path traversal is limited to prefixes of the installation directory, thus isn't able to inject or overwrite executable files in typical situations."
+        },
+        {
+          "id": "CVE-2026-3219",
+          "fix_versions": [
+            "26.1"
+          ],
+          "aliases": [
+            "GHSA-58qw-9mgm-455v"
+          ],
+          "description": "pip handles concatenated tar and ZIP files as ZIP files regardless of filename or whether a file is both a tar and ZIP file. This behavior could result in confusing installation behavior, such as installing \"incorrect\" files according to the filename of the archive. New behavior only proceeds with installation if the file identifies uniquely as a ZIP or tar archive, not as both."
+        },
+        {
+          "id": "CVE-2026-6357",
+          "fix_versions": [
+            "26.1"
+          ],
+          "aliases": [
+            "GHSA-jp4c-xjxw-mgf9"
+          ],
+          "description": "pip prior to version 26.1 would run self-update check functionality after installing wheel files which required importing well-known Python modules names. These module imports were intentionally deferred to increase startup time of the pip CLI. The patch changes self-update functionality to run before wheels are installed to prevent newly-installed modules from being imported shortly after the installation of a wheel package. Users should still review package contents prior to installation."
+        }
+      ]
+    },
+    {
+      "name": "pip-api",
+      "version": "0.0.34",
+      "vulns": []
+    },
+    {
+      "name": "pip-audit",
+      "version": "2.10.1",
+      "vulns": []
+    },
+    {
+      "name": "pip-requirements-parser",
+      "version": "32.0.1",
+      "vulns": []
+    },
+    {
+      "name": "platformdirs",
+      "version": "4.10.0",
+      "vulns": []
+    },
+    {
+      "name": "pluggy",
+      "version": "1.6.0",
+      "vulns": []
+    },
+    {
+      "name": "prophet",
+      "version": "1.3.0",
+      "vulns": []
+    },
+    {
+      "name": "protobuf",
+      "version": "7.35.1",
+      "vulns": []
+    },
+    {
+      "name": "py-serializable",
+      "version": "2.1.0",
+      "vulns": []
+    },
+    {
+      "name": "pygments",
+      "version": "2.20.0",
+      "vulns": []
+    },
+    {
+      "name": "pyparsing",
+      "version": "3.3.2",
+      "vulns": []
+    },
+    {
+      "name": "pyproject-hooks",
+      "version": "1.2.0",
+      "vulns": []
+    },
+    {
+      "name": "pyro-api",
+      "version": "0.1.2",
+      "vulns": []
+    },
+    {
+      "name": "pyro-ppl",
+      "version": "1.9.1",
+      "vulns": []
+    },
+    {
+      "name": "pytest",
+      "version": "9.1.1",
+      "vulns": []
+    },
+    {
+      "name": "pytest-cov",
+      "version": "7.1.0",
+      "vulns": []
+    },
+    {
+      "name": "python-dateutil",
+      "version": "2.9.0.post0",
+      "vulns": []
+    },
+    {
+      "name": "pytokens",
+      "version": "0.4.1",
+      "vulns": []
+    },
+    {
+      "name": "pywin32-ctypes",
+      "version": "0.2.3",
+      "vulns": []
+    },
+    {
+      "name": "pyyaml",
+      "version": "6.0.3",
+      "vulns": []
+    },
+    {
+      "name": "readme-renderer",
+      "version": "45.0",
+      "vulns": []
+    },
+    {
+      "name": "requests",
+      "version": "2.34.2",
+      "vulns": []
+    },
+    {
+      "name": "requests-toolbelt",
+      "version": "1.0.0",
+      "vulns": []
+    },
+    {
+      "name": "rfc3986",
+      "version": "2.0.0",
+      "vulns": []
+    },
+    {
+      "name": "rich",
+      "version": "15.0.0",
+      "vulns": []
+    },
+    {
+      "name": "seaborn",
+      "version": "0.13.2",
+      "vulns": []
+    },
+    {
+      "name": "setuptools",
+      "version": "65.5.0",
+      "vulns": [
+        {
+          "id": "PYSEC-2022-43012",
+          "fix_versions": [
+            "65.5.1"
+          ],
+          "aliases": [
+            "BIT-setuptools-2022-40897",
+            "GHSA-r9hx-vwmv-q579",
+            "CVE-2022-40897"
+          ],
+          "description": "Python Packaging Authority (PyPA)'s setuptools is a library designed to facilitate packaging Python projects. Setuptools version 65.5.0 and earlier could allow remote attackers to cause a denial of service by fetching malicious HTML from a PyPI package or custom PackageIndex page due to a vulnerable Regular Expression in `package_index`. This has been patched in version 65.5.1."
+        },
+        {
+          "id": "PYSEC-2022-43012",
+          "fix_versions": [
+            "65.5.1"
+          ],
+          "aliases": [
+            "GHSA-r9hx-vwmv-q579",
+            "BIT-setuptools-2022-40897",
+            "CVE-2022-40897"
+          ],
+          "description": "Python Packaging Authority (PyPA) setuptools before 65.5.1 allows remote attackers to cause a denial of service via HTML in a crafted package or custom PackageIndex page. There is a Regular Expression Denial of Service (ReDoS) in package_index.py."
+        },
+        {
+          "id": "PYSEC-2025-49",
+          "fix_versions": [
+            "78.1.1"
+          ],
+          "aliases": [
+            "CVE-2025-47273",
+            "BIT-setuptools-2025-47273",
+            "GHSA-5rjg-fvgr-3xxf"
+          ],
+          "description": "### Summary  A path traversal vulnerability in `PackageIndex` was fixed in setuptools version 78.1.1  ### Details ```     def _download_url(self, url, tmpdir):         # Determine download filename         #         name, _fragment = egg_info_for_url(url)         if name:             while '..' in name:                 name = name.replace('..', '.').replace('\\\\', '_')         else:             name = \"__downloaded__\"  # default if URL has no path contents          if name.endswith('.[egg.zip](http://egg.zip/)'):             name = name[:-4]  # strip the extra .zip before download   -->       filename = os.path.join(tmpdir, name) ```  Here: https://github.com/pypa/setuptools/blob/6ead555c5fb29bc57fe6105b1bffc163f56fd558/setuptools/package_index.py#L810C1-L825C88  `os.path.join()` discards the first argument `tmpdir` if the second begins with a slash or drive letter. `name` is derived from a URL without sufficient sanitization. While there is some attempt to sanitize by replacing instances of '..' with '.', it is insufficient.  ### Risk Assessment As easy_install and package_index are deprecated, the exploitation surface is reduced. However, it seems this could be exploited in a similar fashion like https://github.com/advisories/GHSA-r9hx-vwmv-q579, and as described by POC 4 in https://github.com/advisories/GHSA-cx63-2mw6-8hw5 report: via malicious URLs present on the pages of a package index.  ### Impact An attacker would be allowed to write files to arbitrary locations on the filesystem with the permissions of the process running the Python code, which could escalate to RCE depending on the context.  ### References https://huntr.com/bounties/d6362117-ad57-4e83-951f-b8141c6e7ca5 https://github.com/pypa/setuptools/issues/4946"
+        },
+        {
+          "id": "PYSEC-2025-49",
+          "fix_versions": [
+            "78.1.1"
+          ],
+          "aliases": [
+            "CVE-2025-47273",
+            "GHSA-5rjg-fvgr-3xxf"
+          ],
+          "description": "setuptools is a package that allows users to download, build, install, upgrade, and uninstall Python packages. A path traversal vulnerability in `PackageIndex` is present in setuptools prior to version 78.1.1. An attacker would be allowed to write files to arbitrary locations on the filesystem with the permissions of the process running the Python code, which could escalate to remote code execution depending on the context. Version 78.1.1 fixes the issue."
+        },
+        {
+          "id": "CVE-2024-6345",
+          "fix_versions": [
+            "70.0.0"
+          ],
+          "aliases": [
+            "BIT-setuptools-2024-6345",
+            "GHSA-cx63-2mw6-8hw5"
+          ],
+          "description": "A vulnerability in the `package_index` module of pypa/setuptools versions up to 69.1.1 allows for remote code execution via its download functions. These functions, which are used to download packages from URLs provided by users or retrieved from package index servers, are susceptible to code injection. If these functions are exposed to user-controlled inputs, such as package URLs, they can execute arbitrary commands on the system. The issue is fixed in version 70.0."
+        }
+      ]
+    },
+    {
+      "name": "six",
+      "version": "1.17.0",
+      "vulns": []
+    },
+    {
+      "name": "sortedcontainers",
+      "version": "2.4.0",
+      "vulns": []
+    },
+    {
+      "name": "stanio",
+      "version": "0.5.1",
+      "vulns": []
+    },
+    {
+      "name": "sympy",
+      "version": "1.14.0",
+      "vulns": []
+    },
+    {
+      "name": "tensorflow",
+      "version": "2.21.0",
+      "vulns": []
+    },
+    {
+      "name": "tensorflow-probability",
+      "version": "0.24.0",
+      "vulns": []
+    },
+    {
+      "name": "termcolor",
+      "version": "3.3.0",
+      "vulns": []
+    },
+    {
+      "name": "tf-keras",
+      "version": "2.21.0",
+      "vulns": []
+    },
+    {
+      "name": "tomli",
+      "version": "2.4.1",
+      "vulns": []
+    },
+    {
+      "name": "tomli-w",
+      "version": "1.2.0",
+      "vulns": []
+    },
+    {
+      "name": "torch",
+      "version": "2.12.1",
+      "vulns": []
+    },
+    {
+      "name": "tqdm",
+      "version": "4.68.3",
+      "vulns": []
+    },
+    {
+      "name": "trove-classifiers",
+      "version": "2026.6.1.19",
+      "vulns": []
+    },
+    {
+      "name": "twine",
+      "version": "6.2.0",
+      "vulns": []
+    },
+    {
+      "name": "typing-extensions",
+      "version": "4.15.0",
+      "vulns": []
+    },
+    {
+      "name": "tzdata",
+      "version": "2026.2",
+      "vulns": []
+    },
+    {
+      "name": "urllib3",
+      "version": "2.7.0",
+      "vulns": []
+    },
+    {
+      "name": "wheel",
+      "version": "0.47.0",
+      "vulns": []
+    },
+    {
+      "name": "wrapt",
+      "version": "2.2.2",
+      "vulns": []
+    },
+    {
+      "name": "zipp",
+      "version": "4.1.0",
+      "vulns": []
+    }
+  ],
+  "fixes": []
+}

@@ -137,6 +137,31 @@ Install the required dependencies listed in the `requirements.txt` file:
 pip install -r requirements.txt
 ```
 
+Dependency audit & installation notes
+------------------------------------
+
+- It is recommended to install dependencies inside a virtual environment. Example (cross-platform):
+
+```bash
+python -m venv .env
+source .env/bin/activate   # macOS / Linux
+\.env\Scripts\activate    # Windows Powershell
+```
+
+- Upgrade `pip` and `setuptools` before installing dependencies to avoid known tooling issues:
+
+```bash
+python -m pip install --upgrade pip setuptools
+```
+
+- This repository includes a CI workflow that runs `pip-audit` on push/PRs: `.github/workflows/dependency-audit.yml`. You can run the same audit locally:
+
+```bash
+python -m pip install pip-audit
+python -m pip_audit
+```
+
+
 **Step 3: Build the Wheel File** 
 
 Build the library into a Python Wheel file:

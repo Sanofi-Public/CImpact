@@ -1,3 +1,32 @@
+# Virtual environments
+.env
+.env/
+venv/
+env/
+
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+
+# Distribution / build
+dist/
+build/
+*.egg-info/
+
+# Pytest cache
+.pytest_cache/
+
+# IDEs
+.vscode/
+
+# Sensitive files
+secrets.yml
+secrets.yaml
+.env.local
+credentials
+
+# Logs
+*.log
 __pycache__/
 .hypothesis/
 .pytest_cache/
@@ -12,3 +41,4 @@ dist/*
 *.csv
 .checkmarx/
 .checkmarx/scan_results/
+CImpact/
