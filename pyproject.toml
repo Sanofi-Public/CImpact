@@ -23,13 +23,9 @@ dependencies = ["numpy>=1.19.2",
   "pyro-ppl>=1.6.0",
   "torch>=1.7.0",
   "seaborn",
+  "scipy",
   "pyyaml",
-  "black",
-  "pytest-cov",
-  "pytest",
-  "tf-keras",
-  "build",
-  "hatchling"]
+  "tf-keras"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.7",
@@ -44,6 +40,8 @@ classifiers = [
 ]
   
 
+[project.optional-dependencies]
+dev = ["black", "pytest", "pytest-cov", "build", "hatchling", "twine"]
 
 [project.urls]
 "Homepage" = "https://github.com/Sanofi-Public/CImpact"

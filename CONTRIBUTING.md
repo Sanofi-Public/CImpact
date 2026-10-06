@@ -32,7 +32,7 @@ Thank you for considering contributing to **CImpact**! We welcome contributions 
 - **Add Tests**: If applicable, add unit tests to cover your changes.
 - **Commit Changes**: Commit your changes with a meaningful commit message.
 - **Push to Fork**: Push your branch to your forked repository on GitHub.
-- **Submit a Pull Request**: Open a pull request to the `main` branch of the original repository.
+- **Submit a Pull Request**: Open a pull request to the `master` branch of the original repository.
   - Provide a clear description of the changes.
   - Reference any related issues.
 
