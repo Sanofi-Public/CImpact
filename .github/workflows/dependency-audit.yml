@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main, master ]
 
+permissions:
+  contents: read
+
 jobs:
   pip-audit:
     name: Run pip-audit
@@ -15,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -29,11 +32,11 @@ jobs:
 
       - name: Run pip-audit (fail on any vuln)
         run: |
-          python -m pip_audit --format=txt --progress=off
+          python -m pip_audit -r requirements.txt --format=txt --progress=off
 
       - name: Run pip-audit (save JSON)
         run: |
-          python -m pip_audit --format=json --progress=off > pip_audit_results.json
+          python -m pip_audit -r requirements.txt --format=json --progress=off > pip_audit_results.json
 
       - name: Upload pip-audit results
         uses: actions/upload-artifact@v4

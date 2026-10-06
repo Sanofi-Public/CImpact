@@ -3,14 +3,15 @@ on:
   pull_request:
     branches:
       - main
+      - master
       - staging
   push:
     branches:
       - main
+      - master
       - staging
 permissions:
-  contents: 'read'
-  id-token: 'write'
+  contents: read
 
 jobs:
   unit-tests:
